@@ -37,20 +37,20 @@ def get_webpage_content(url):
         str: Текстовое содержимое страницы или None в случае ошибки
     """
     if not is_valid_url(url):
-        logger.error(f"Недопустимый URL: {url}")
+        logger.error(f"Invalid URL: {url}")
         return None
     
     try:
-        # Используем trafilatura для извлечения чистого текста
+        # Use trafilatura to extract clean text content
         downloaded = trafilatura.fetch_url(url)
         if downloaded:
             text = trafilatura.extract(downloaded)
             return text
         else:
-            logger.error(f"Не удалось загрузить страницу: {url}")
+            logger.error(f"Failed to load page: {url}")
             return None
     except Exception as e:
-        logger.error(f"Ошибка при получении содержимого страницы {url}: {str(e)}")
+        logger.error(f"Error retrieving content from page {url}: {str(e)}")
         logger.debug(traceback.format_exc())
         return None
 
