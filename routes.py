@@ -1,7 +1,8 @@
 import logging
-from flask import render_template
+from flask import render_template, jsonify
 from app import app
 from utils.model_utils import get_language_model_version
+from datetime import datetime
 
 logger = logging.getLogger(__name__)
 
@@ -20,6 +21,28 @@ def demo():
 def documentation():
     """API documentation page"""
     return render_template('documentation.html', model_info=get_language_model_version())
+
+@app.route('/code-generator')
+def code_generator():
+    """Code generation page with continuous learning"""
+    return render_template('code_generator.html')
+
+@app.route('/api/learning-status')
+def learning_status():
+    """API endpoint to get current learning status"""
+    # В реальном приложении здесь запрашивались бы данные из БД
+    # Для демо возвращаем фиктивные данные
+    try:
+        from utils.learning_utils import model_improvement_stats
+        return jsonify(model_improvement_stats)
+    except Exception as e:
+        # В случае ошибки возвращаем фиктивные данные
+        return jsonify({
+            "iterations": 5,
+            "last_updated": datetime.utcnow().isoformat(),
+            "improvements": [],
+            "total_samples_processed": 25
+        })
 
 @app.errorhandler(404)
 def page_not_found(e):

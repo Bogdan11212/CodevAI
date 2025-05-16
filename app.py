@@ -28,6 +28,9 @@ app.config["SQLALCHEMY_ENGINE_OPTIONS"] = {
 }
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
+# Отключаем некоторые предупреждения SQLAlchemy
+app.config["SQLALCHEMY_WARN_20"] = False
+
 # Initialize the database with the app
 db.init_app(app)
 
