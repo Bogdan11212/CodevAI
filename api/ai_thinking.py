@@ -4,7 +4,7 @@ import json
 import os
 from flask import request, jsonify
 from api import api_bp
-from brain.ai_processor import get_ai_thinking
+from brain.cloudflare_ai import get_ai_thinking, get_code_completion, check_code_errors, detect_language
 from brain.web_access import get_webpage_content, search_programming_solutions
 
 logger = logging.getLogger(__name__)

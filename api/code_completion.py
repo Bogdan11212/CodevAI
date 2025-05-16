@@ -1,8 +1,9 @@
 import logging
+import time
 from flask import request, jsonify
 from api import api_bp
-from utils.model_utils import get_language_model, predefined_completions
 from config import Config
+from brain.cloudflare_ai import get_code_completion
 
 logger = logging.getLogger(__name__)
 
@@ -26,6 +27,7 @@ def complete_code():
     # Extract parameters
     code = data.get('code')
     language = data.get('language', 'python').lower()
+    max_tokens = data.get('max_tokens', 100)
     
     # Validate input
     if not code:
@@ -39,31 +41,21 @@ def complete_code():
     try:
         logger.debug(f"Processing code completion request for language {language}")
         
-        # Demo mode - look for predefined completions
-        completion = ""
+        start_time = time.time()
         
-        # Check if we have a predefined completion for this code and language
-        if language in predefined_completions and code in predefined_completions[language]:
-            completion = predefined_completions[language][code]
-        else:
-            # Provide a generic completion for demo
-            if language == "python":
-                completion = "    # This is a demo completion\n    pass"
-            elif language == "javascript":
-                completion = "  // This is a demo completion\n  return null;"
-            elif language == "java":
-                completion = "  // This is a demo completion\n  return null;"
-            elif language == "cpp":
-                completion = "  // This is a demo completion\n  return 0;"
-            elif language == "go":
-                completion = "  // This is a demo completion\n  return nil"
+        # Используем Cloudflare AI для завершения кода
+        completion = get_code_completion(code, language, max_tokens)
+        
+        # Расчитываем время обработки
+        processing_time = time.time() - start_time
         
         # Prepare response
         response = {
             "completion": completion,
             "language": language,
             "input_code": code,
-            "demo_mode": True
+            "processing_time": processing_time,
+            "demo_mode": False
         }
         
         return jsonify(response), 200
