@@ -35,6 +35,30 @@
       "timestamp": "2025-05-16T22:28:03.845441",
       "content_snippet": "Human verification\nAre you a human being? We apologize for the confusion, but we can't quite tell if you're a person or a script. Please don't take this personally. Bots and scripts can be remarkably ",
       "code_samples": []
+    },
+    "programming_languages_7": {
+      "source_url": "https://github.com/search?q=go language tutorial&type=repositories",
+      "timestamp": "2025-05-16T22:28:57.054967",
+      "content_snippet": "repositories Search Results \u00b7 go language tutorial\nFilter by\n471 results\n(157 ms)471 results\nGo\nGo is a programming language built to resemble a simplified version of the C programming language.\nI cre",
+      "code_samples": []
+    },
+    "programming_languages_8": {
+      "source_url": "https://dev.to/search?q=go language tutorial",
+      "timestamp": "2025-05-16T22:29:16.915388",
+      "content_snippet": "Skip to content\nNavigation menu\nSearch\nPowered by\nSearch\nAlgolia\nLog in\nCreate account\nDEV Community\nClose\nSearch\nSearch results for go language tutorial\nMost Relevant\nNewest\nOldest\nPosts\nPeople\nOrgan",
+      "code_samples": []
+    },
+    "programming_languages_9": {
+      "source_url": "https://medium.com/programming/search?q=go language tutorial",
+      "timestamp": "2025-05-16T22:29:38.657024",
+      "content_snippet": "Open in app\nSign up\nSign in\nMedium Logo\nWrite\nSign up\nSign in\nPAGE NOT FOUND\n404\nOut of nothing, something.\nYou can find (just about) anything on Medium \u2014 apparently even a page that doesn\u2019t exist. Ma",
+      "code_samples": []
+    },
+    "programming_languages_10": {
+      "source_url": "https://realpython.com/search?q=go language tutorial",
+      "timestamp": "2025-05-16T22:29:59.109257",
+      "content_snippet": "[[ resultsCount ]][[' result' + (resultsCount == 0 || resultsCount > 1 ? \"s\" : \"\") ]] for \u201c[[ filters.query.length < 50 ? filters.query : filters.query.substring(0, 50) + \"\u2026\" ]]\u201d\nYour bookmarks list i",
+      "code_samples": []
     }
   },
   "libraries": {
@@ -48,5 +72,5 @@
   "algorithms": {},
   "best_practices": {},
   "common_errors": {},
-  "last_updated": "2025-05-16T22:28:03.845501"
+  "last_updated": "2025-05-16T22:29:59.109281"
 }

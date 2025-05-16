@@ -5,10 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}CodevAI - Intelligent Programming Assistant{% endblock %}</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
     {% block head %}{% endblock %}
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container">
             <a class="navbar-brand" href="/">CodevAI</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -17,25 +19,25 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link" href="/">Home</a>
+                        <a class="nav-link" href="/"><i class="fas fa-home"></i> Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/demo">Demo</a>
+                        <a class="nav-link" href="/demo"><i class="fas fa-flask"></i> Demo</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/code-generator">Code Generator</a>
+                        <a class="nav-link" href="/code-generator"><i class="fas fa-code"></i> Code Generator</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/ai-thinking">AI Thinking</a>
+                        <a class="nav-link" href="/ai-thinking"><i class="fas fa-brain"></i> AI Thinking</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/interactive-editor">Interactive Editor</a>
+                        <a class="nav-link" href="/interactive-editor"><i class="fas fa-edit"></i> Interactive Editor</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/ai-learning">Learning System</a>
+                        <a class="nav-link" href="/ai-learning"><i class="fas fa-graduation-cap"></i> Learning System</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/documentation">API Documentation</a>
+                        <a class="nav-link" href="/documentation"><i class="fas fa-book"></i> API Docs</a>
                     </li>
                 </ul>
             </div>
@@ -46,7 +48,7 @@
         {% block content %}{% endblock %}
     </main>
 
-    <footer class="bg-dark text-light py-4 mt-5">
+    <footer class="text-light py-4 mt-5">
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
@@ -56,17 +58,17 @@
                 <div class="col-md-3">
                     <h5>Links</h5>
                     <ul class="list-unstyled">
-                        <li><a href="/" class="text-light">Home</a></li>
-                        <li><a href="/documentation" class="text-light">API Documentation</a></li>
-                        <li><a href="/demo" class="text-light">Demo</a></li>
+                        <li><a href="/" class="text-light"><i class="fas fa-home"></i> Home</a></li>
+                        <li><a href="/documentation" class="text-light"><i class="fas fa-book"></i> API Documentation</a></li>
+                        <li><a href="/demo" class="text-light"><i class="fas fa-flask"></i> Demo</a></li>
                     </ul>
                 </div>
                 <div class="col-md-3">
                     <h5>Support</h5>
                     <ul class="list-unstyled">
-                        <li><a href="#" class="text-light">Help</a></li>
-                        <li><a href="#" class="text-light">Contact</a></li>
-                        <li><a href="#" class="text-light">Privacy Policy</a></li>
+                        <li><a href="#" class="text-light"><i class="fas fa-question-circle"></i> Help</a></li>
+                        <li><a href="#" class="text-light"><i class="fas fa-envelope"></i> Contact</a></li>
+                        <li><a href="#" class="text-light"><i class="fas fa-shield-alt"></i> Privacy Policy</a></li>
                     </ul>
                 </div>
             </div>
