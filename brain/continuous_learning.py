@@ -113,4 +113,4 @@ def extract_knowledge_from_content(content, url, topic=None):
 
         # Extract code blocks
         import re
-        code_blocks = re.findall(r'```[a-z]*\n(.*?)\n
+        code_blocks = re.findall(r'```[a-z]*\n(.*?)\n```', content, re.DOTALL)
