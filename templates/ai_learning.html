@@ -1,27 +1,27 @@
 {% extends "base.html" %}
 
-{% block title %}CodevAI - Система обучения ИИ{% endblock %}
+{% block title %}CodevAI - AI Learning System{% endblock %}
 
 {% block content %}
 
 <div class="container mt-5">
     <div class="row">
         <div class="col-12">
-            <h1 class="mb-4">Система обучения ИИ</h1>
+            <h1 class="mb-4">AI Learning System</h1>
             <p class="lead">
-                Система непрерывного обучения CodevAI собирает знания из различных источников в интернете, 
-                постоянно улучшая свою базу знаний для предоставления более качественных ответов на запросы программистов.
+                CodevAI's continuous learning system gathers knowledge from various internet sources,
+                constantly improving its knowledge base to provide better answers to programmers' queries.
             </p>
             
             <div class="card mb-4">
                 <div class="card-header bg-primary text-white">
-                    <h4 class="mb-0">Статус обучения ИИ</h4>
+                    <h4 class="mb-0">AI Learning Status</h4>
                 </div>
                 <div class="card-body">
                     <div id="learning-status">
                         <div class="d-flex justify-content-center">
                             <div class="spinner-border text-primary" role="status">
-                                <span class="visually-hidden">Загрузка...</span>
+                                <span class="visually-hidden">Loading...</span>
                             </div>
                         </div>
                     </div>
@@ -32,16 +32,16 @@
                 <div class="col-md-6">
                     <div class="card mb-4">
                         <div class="card-header bg-success text-white">
-                            <h4 class="mb-0">Добавить URL для обучения</h4>
+                            <h4 class="mb-0">Add URL for Learning</h4>
                         </div>
                         <div class="card-body">
                             <form id="enqueue-url-form">
                                 <div class="mb-3">
-                                    <label for="url-input" class="form-label">URL веб-страницы с программистским контентом</label>
+                                    <label for="url-input" class="form-label">URL of webpage with programming content</label>
                                     <input type="url" class="form-control" id="url-input" required 
                                            placeholder="https://example.com/python-tutorial">
                                 </div>
-                                <button type="submit" class="btn btn-success">Добавить в очередь</button>
+                                <button type="submit" class="btn btn-success">Add to Queue</button>
                             </form>
                             <div id="enqueue-result" class="alert mt-3" style="display: none;"></div>
                         </div>
@@ -51,16 +51,16 @@
                 <div class="col-md-6">
                     <div class="card mb-4">
                         <div class="card-header bg-info text-white">
-                            <h4 class="mb-0">Получить и обработать контент</h4>
+                            <h4 class="mb-0">Process Content</h4>
                         </div>
                         <div class="card-body">
                             <form id="process-url-form">
                                 <div class="mb-3">
-                                    <label for="process-url-input" class="form-label">URL для немедленной обработки</label>
+                                    <label for="process-url-input" class="form-label">URL for immediate processing</label>
                                     <input type="url" class="form-control" id="process-url-input" required 
                                            placeholder="https://example.com/programming-article">
                                 </div>
-                                <button type="submit" class="btn btn-info">Обработать сейчас</button>
+                                <button type="submit" class="btn btn-info">Process Now</button>
                             </form>
                             <div id="process-result" class="alert mt-3" style="display: none;"></div>
                         </div>
@@ -70,25 +70,25 @@
             
             <div class="card mb-4">
                 <div class="card-header bg-warning text-dark">
-                    <h4 class="mb-0">Просмотр содержимого веб-страницы</h4>
+                    <h4 class="mb-0">View Webpage Content</h4>
                 </div>
                 <div class="card-body">
                     <form id="view-content-form">
                         <div class="mb-3">
-                            <label for="content-url-input" class="form-label">URL веб-страницы для просмотра содержимого</label>
+                            <label for="content-url-input" class="form-label">URL of webpage to view content</label>
                             <input type="url" class="form-control" id="content-url-input" required 
                                    placeholder="https://example.com/programming-guide">
                         </div>
-                        <button type="submit" class="btn btn-warning">Получить содержимое</button>
+                        <button type="submit" class="btn btn-warning">Get Content</button>
                     </form>
                     <div class="mt-3">
                         <div id="content-loading" class="text-center" style="display: none;">
                             <div class="spinner-border text-warning" role="status">
-                                <span class="visually-hidden">Загрузка...</span>
+                                <span class="visually-hidden">Loading...</span>
                             </div>
                         </div>
                         <div id="content-result" class="mt-3" style="display: none;">
-                            <h5>Извлеченный контент:</h5>
+                            <h5>Extracted Content:</h5>
                             <div class="border p-3 bg-light">
                                 <pre id="content-text" style="white-space: pre-wrap;"></pre>
                             </div>
@@ -104,7 +104,7 @@
 
 {% block scripts %}
 <script>
-    // Функция для загрузки статуса обучения
+    // Function to load learning status
     function loadLearningStatus() {
         fetch('/api/learning/status')
             .then(response => response.json())
@@ -116,38 +116,38 @@
                     return;
                 }
                 
-                // Форматируем дату последнего обновления
+                // Format last updated date
                 let lastUpdated = data.last_updated;
                 if (lastUpdated && lastUpdated !== 'Never') {
                     const date = new Date(lastUpdated);
                     lastUpdated = date.toLocaleString();
                 }
                 
-                // Создаем HTML для статуса
+                // Create HTML for status
                 let html = `
                     <div class="row">
                         <div class="col-md-6">
-                            <h5>Общая информация</h5>
+                            <h5>General Information</h5>
                             <ul class="list-group">
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    Статус системы
-                                    <span class="badge bg-success">Активна</span>
+                                    System Status
+                                    <span class="badge bg-success">Active</span>
                                 </li>
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    Всего элементов знаний
+                                    Total Knowledge Items
                                     <span class="badge bg-primary">${data.total_items}</span>
                                 </li>
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    Последнее обновление
+                                    Last Updated
                                     <span>${lastUpdated}</span>
                                 </li>
                             </ul>
                         </div>
                         <div class="col-md-6">
-                            <h5>Категории знаний</h5>
+                            <h5>Knowledge Categories</h5>
                             <ul class="list-group">`;
                 
-                // Добавляем категории
+                // Add categories
                 for (const category in data.categories) {
                     const count = data.categories[category];
                     const displayName = category.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
@@ -168,11 +168,11 @@
             .catch(error => {
                 console.error('Error loading learning status:', error);
                 document.getElementById('learning-status').innerHTML = 
-                    `<div class="alert alert-danger">Ошибка загрузки статуса: ${error.message}</div>`;
+                    `<div class="alert alert-danger">Error loading status: ${error.message}</div>`;
             });
     }
     
-    // Обработчик формы добавления URL в очередь
+    // Handler for adding URL to queue form
     document.getElementById('enqueue-url-form').addEventListener('submit', function(e) {
         e.preventDefault();
         
@@ -196,19 +196,19 @@
                 resultDiv.textContent = data.message;
             } else {
                 resultDiv.className = 'alert alert-danger mt-3';
-                resultDiv.textContent = data.error || 'Произошла ошибка при добавлении URL';
+                resultDiv.textContent = data.error || 'Error adding URL';
             }
             resultDiv.style.display = 'block';
         })
         .catch(error => {
             console.error('Error enqueueing URL:', error);
             resultDiv.className = 'alert alert-danger mt-3';
-            resultDiv.textContent = `Ошибка: ${error.message}`;
+            resultDiv.textContent = `Error: ${error.message}`;
             resultDiv.style.display = 'block';
         });
     });
     
-    // Обработчик формы обработки URL
+    // Handler for processing URL form
     document.getElementById('process-url-form').addEventListener('submit', function(e) {
         e.preventDefault();
         
@@ -230,23 +230,23 @@
             if (data.success) {
                 resultDiv.className = 'alert alert-success mt-3';
                 resultDiv.textContent = data.message;
-                // Обновляем статус обучения после успешной обработки
+                // Update learning status after successful processing
                 loadLearningStatus();
             } else {
                 resultDiv.className = 'alert alert-danger mt-3';
-                resultDiv.textContent = data.error || 'Произошла ошибка при обработке URL';
+                resultDiv.textContent = data.error || 'Error processing URL';
             }
             resultDiv.style.display = 'block';
         })
         .catch(error => {
             console.error('Error processing URL:', error);
             resultDiv.className = 'alert alert-danger mt-3';
-            resultDiv.textContent = `Ошибка: ${error.message}`;
+            resultDiv.textContent = `Error: ${error.message}`;
             resultDiv.style.display = 'block';
         });
     });
     
-    // Обработчик формы просмотра содержимого
+    // Handler for viewing content form
     document.getElementById('view-content-form').addEventListener('submit', function(e) {
         e.preventDefault();
         
@@ -273,22 +273,22 @@
                 contentText.textContent = data.content;
                 resultDiv.style.display = 'block';
             } else if (data.error) {
-                contentText.textContent = `Ошибка: ${data.error}`;
+                contentText.textContent = `Error: ${data.error}`;
                 resultDiv.style.display = 'block';
             } else {
-                contentText.textContent = 'Не удалось получить содержимое страницы';
+                contentText.textContent = 'Unable to fetch page content';
                 resultDiv.style.display = 'block';
             }
         })
         .catch(error => {
             console.error('Error fetching content:', error);
             loadingDiv.style.display = 'none';
-            contentText.textContent = `Ошибка: ${error.message}`;
+            contentText.textContent = `Error: ${error.message}`;
             resultDiv.style.display = 'block';
         });
     });
     
-    // Загружаем статус обучения при загрузке страницы
+    // Load learning status when page loads
     document.addEventListener('DOMContentLoaded', loadLearningStatus);
 </script>
 {% endblock %}

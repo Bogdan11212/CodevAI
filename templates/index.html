@@ -1,37 +1,37 @@
 {% extends "base.html" %}
 
-{% block title %}CodevAI - Интеллектуальная помощь программистам{% endblock %}
+{% block title %}CodevAI - Intelligent Programming Assistant{% endblock %}
 
 {% block content %}
 <div class="container mt-5">
     <div class="row align-items-center">
         <div class="col-lg-6">
             <h1 class="display-4 fw-bold">CodevAI</h1>
-            <p class="lead mb-4">Интеллектуальный помощник для программистов с возможностью непрерывного обучения</p>
+            <p class="lead mb-4">Intelligent programming assistant with continuous learning capability</p>
             <p class="mb-4">
-                CodevAI - это API на базе искусственного интеллекта, который помогает программистам писать код, 
-                находить ошибки и получать ответы на вопросы по программированию на различных языках.
+                CodevAI is an AI-powered API that helps programmers write code, 
+                find errors, and get answers to programming questions in various languages.
             </p>
             <div class="d-grid gap-2 d-md-flex justify-content-md-start">
-                <a href="/demo" class="btn btn-primary btn-lg px-4 me-md-2">Попробовать демо</a>
-                <a href="/documentation" class="btn btn-outline-secondary btn-lg px-4">API документация</a>
+                <a href="/demo" class="btn btn-primary btn-lg px-4 me-md-2">Try Demo</a>
+                <a href="/documentation" class="btn btn-outline-secondary btn-lg px-4">API Documentation</a>
             </div>
         </div>
         <div class="col-lg-6">
             <div class="card mb-4 shadow-lg">
                 <div class="card-header bg-dark text-white">
-                    <h5 class="mb-0">Пример работы CodevAI</h5>
+                    <h5 class="mb-0">CodevAI Example</h5>
                 </div>
                 <div class="card-body">
                     <pre><code class="language-python">def fibonacci(n):
     """
-    Функция вычисляет n-ое число Фибоначчи.
+    This function calculates the nth Fibonacci number.
     
     Args:
-        n: Порядковый номер числа Фибоначчи
+        n: The Fibonacci number to calculate
         
     Returns:
-        int: n-ое число Фибоначчи
+        int: The nth Fibonacci number
     """
     if n <= 0:
         return 0
@@ -46,47 +46,47 @@
     
     <div class="row mt-5">
         <div class="col-12">
-            <h2 class="text-center mb-4">Ключевые возможности</h2>
+            <h2 class="text-center mb-4">Key Features</h2>
         </div>
         <div class="col-md-4">
             <div class="card h-100">
                 <div class="card-body">
-                    <h4 class="card-title"><i class="fas fa-code"></i> Генерация кода</h4>
+                    <h4 class="card-title"><i class="fas fa-code"></i> Code Generation</h4>
                     <p class="card-text">
-                        Генерирует код на различных языках программирования на основе ваших запросов с 
-                        подробными комментариями и документацией.
+                        Generates code in various programming languages based on your queries with
+                        detailed comments and documentation.
                     </p>
                 </div>
                 <div class="card-footer">
-                    <a href="/code-generator" class="btn btn-primary">Попробовать</a>
+                    <a href="/code-generator" class="btn btn-primary">Try It</a>
                 </div>
             </div>
         </div>
         <div class="col-md-4">
             <div class="card h-100">
                 <div class="card-body">
-                    <h4 class="card-title"><i class="fas fa-bug"></i> Проверка кода</h4>
+                    <h4 class="card-title"><i class="fas fa-bug"></i> Code Checking</h4>
                     <p class="card-text">
-                        Анализирует ваш код на наличие ошибок, уязвимостей и предлагает способы 
-                        оптимизации и улучшения.
+                        Analyzes your code for errors, vulnerabilities, and suggests ways to
+                        optimize and improve it.
                     </p>
                 </div>
                 <div class="card-footer">
-                    <a href="/demo" class="btn btn-primary">Попробовать</a>
+                    <a href="/demo" class="btn btn-primary">Try It</a>
                 </div>
             </div>
         </div>
         <div class="col-md-4">
             <div class="card h-100">
                 <div class="card-body">
-                    <h4 class="card-title"><i class="fas fa-brain"></i> Непрерывное обучение</h4>
+                    <h4 class="card-title"><i class="fas fa-brain"></i> Continuous Learning</h4>
                     <p class="card-text">
-                        Система постоянно обучается на новых данных из Интернета, улучшая качество 
-                        ответов и рекомендаций.
+                        The system continuously learns from new data from the Internet, improving the quality
+                        of answers and recommendations.
                     </p>
                 </div>
                 <div class="card-footer">
-                    <a href="/ai-learning" class="btn btn-primary">Подробнее</a>
+                    <a href="/ai-learning" class="btn btn-primary">Learn More</a>
                 </div>
             </div>
         </div>
@@ -96,7 +96,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header bg-primary text-white">
-                    <h3 class="mb-0">Поддерживаемые языки программирования</h3>
+                    <h3 class="mb-0">Supported Programming Languages</h3>
                 </div>
                 <div class="card-body">
                     <div class="row">

@@ -1,10 +1,10 @@
 """
-API для управления системой непрерывного обучения CodevAI через веб-интерфейс
+API for managing CodevAI's continuous learning system through the web interface
 """
 
 import logging
 import json
-from flask import request, jsonify
+from flask import request, jsonify, current_app
 from api import api_bp
 from web_scraper import enqueue_url_for_learning, process_url_now, get_website_text_content
 from brain.continuous_learning import count_knowledge_items, knowledge_base
@@ -14,9 +14,9 @@ logger = logging.getLogger(__name__)
 @api_bp.route('/learning/enqueue', methods=['POST'])
 def api_enqueue_url():
     """
-    Добавляет URL в очередь для обработки системой непрерывного обучения
+    Add URL to the queue for processing by continuous learning system
     
-    Ожидаемый JSON запрос:
+    Expected JSON request:
     {
         "url": "https://example.com/python-tutorial"
     }
@@ -24,27 +24,27 @@ def api_enqueue_url():
     data = request.get_json()
     
     if not data:
-        return jsonify({"error": "Данные не предоставлены"}), 400
+        return jsonify({"error": "No data provided"}), 400
     
     url = data.get('url')
     
     if not url:
-        return jsonify({"error": "URL не предоставлен"}), 400
+        return jsonify({"error": "No URL provided"}), 400
     
-    # Добавляем URL в очередь для обработки
+    # Add URL to the queue for processing
     success = enqueue_url_for_learning(url)
     
     if success:
-        return jsonify({"success": True, "message": "URL успешно добавлен в очередь"}), 200
+        return jsonify({"success": True, "message": "URL successfully added to queue"}), 200
     else:
-        return jsonify({"success": False, "error": "Не удалось добавить URL в очередь"}), 400
+        return jsonify({"success": False, "error": "Failed to add URL to queue"}), 400
 
 @api_bp.route('/learning/process', methods=['POST'])
 def api_process_url():
     """
-    Немедленно обрабатывает URL для извлечения знаний
+    Immediately process URL for knowledge extraction
     
-    Ожидаемый JSON запрос:
+    Expected JSON request:
     {
         "url": "https://example.com/python-tutorial"
     }
@@ -52,14 +52,14 @@ def api_process_url():
     data = request.get_json()
     
     if not data:
-        return jsonify({"error": "Данные не предоставлены"}), 400
+        return jsonify({"error": "No data provided"}), 400
     
     url = data.get('url')
     
     if not url:
-        return jsonify({"error": "URL не предоставлен"}), 400
+        return jsonify({"error": "No URL provided"}), 400
     
-    # Обрабатываем URL немедленно
+    # Process URL immediately
     result = process_url_now(url)
     
     return jsonify(result), 200 if result.get("success", False) else 400
@@ -67,9 +67,9 @@ def api_process_url():
 @api_bp.route('/learning/content', methods=['POST'])
 def api_get_url_content():
     """
-    Получает содержимое веб-страницы
+    Get webpage content
     
-    Ожидаемый JSON запрос:
+    Expected JSON request:
     {
         "url": "https://example.com/python-tutorial"
     }
@@ -77,14 +77,14 @@ def api_get_url_content():
     data = request.get_json()
     
     if not data:
-        return jsonify({"error": "Данные не предоставлены"}), 400
+        return jsonify({"error": "No data provided"}), 400
     
     url = data.get('url')
     
     if not url:
-        return jsonify({"error": "URL не предоставлен"}), 400
+        return jsonify({"error": "No URL provided"}), 400
     
-    # Получаем содержимое веб-страницы
+    # Get webpage content
     content = get_website_text_content(url)
     
     return jsonify({"content": content}), 200
@@ -92,14 +92,14 @@ def api_get_url_content():
 @api_bp.route('/learning/status', methods=['GET'])
 def api_learning_status():
     """
-    Получает статус системы непрерывного обучения
+    Get continuous learning system status
     """
     try:
-        # Получаем информацию о базе знаний
+        # Get knowledge base information
         item_count = count_knowledge_items()
         last_updated = knowledge_base.get("last_updated", "Never")
         
-        # Формируем статус по категориям
+        # Form status by categories
         categories_status = {}
         for category in knowledge_base:
             if category != "last_updated":
@@ -112,5 +112,5 @@ def api_learning_status():
             "categories": categories_status
         }), 200
     except Exception as e:
-        logger.error(f"Ошибка при получении статуса системы обучения: {str(e)}")
-        return jsonify({"error": "Не удалось получить статус системы обучения"}), 500
+        logger.error(f"Error getting learning system status: {str(e)}")
+        return jsonify({"error": "Failed to get learning system status"}), 500

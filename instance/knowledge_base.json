@@ -17,11 +17,36 @@
       "timestamp": "2025-05-16T22:15:34.637603",
       "content_snippet": "Open in app\nSign up\nSign in\nMedium Logo\nWrite\nSign up\nSign in\nPAGE NOT FOUND\n404\nOut of nothing, something.\nYou can find (just about) anything on Medium \u2014 apparently even a page that doesn\u2019t exist. Ma",
       "code_samples": []
+    },
+    "programming_languages_4": {
+      "source_url": "https://realpython.com/search?q=clean code principles",
+      "timestamp": "2025-05-16T22:15:53.968129",
+      "content_snippet": "[[ resultsCount ]][[' result' + (resultsCount == 0 || resultsCount > 1 ? \"s\" : \"\") ]] for \u201c[[ filters.query.length < 50 ? filters.query : filters.query.substring(0, 50) + \"\u2026\" ]]\u201d\nYour bookmarks list i",
+      "code_samples": []
+    },
+    "programming_languages_5": {
+      "source_url": "https://javascript.info/search?q=clean code principles",
+      "timestamp": "2025-05-16T22:16:17.540460",
+      "content_snippet": "We want to make this open-source project available for people all around the world.\nHelp to translate the content of this tutorial to your language!",
+      "code_samples": []
+    },
+    "programming_languages_6": {
+      "source_url": "https://stackoverflow.com/search?q=go language tutorial",
+      "timestamp": "2025-05-16T22:28:03.845441",
+      "content_snippet": "Human verification\nAre you a human being? We apologize for the confusion, but we can't quite tell if you're a person or a script. Please don't take this personally. Bots and scripts can be remarkably ",
+      "code_samples": []
     }
   },
-  "libraries": {},
+  "libraries": {
+    "libraries_1": {
+      "source_url": "https://stackoverflow.com/search?q=web development frameworks",
+      "timestamp": "2025-05-16T22:27:06.752387",
+      "content_snippet": "Human verification\nAre you a human being? We apologize for the confusion, but we can't quite tell if you're a person or a script. Please don't take this personally. Bots and scripts can be remarkably ",
+      "code_samples": []
+    }
+  },
   "algorithms": {},
   "best_practices": {},
   "common_errors": {},
-  "last_updated": "2025-05-16T22:15:34.637702"
+  "last_updated": "2025-05-16T22:28:03.845501"
 }

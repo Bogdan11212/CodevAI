@@ -1,11 +1,10 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}CodevAI - Интеллектуальная помощь программистам{% endblock %}</title>
+    <title>{% block title %}CodevAI - Intelligent Programming Assistant{% endblock %}</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
     {% block head %}{% endblock %}
 </head>
 <body>
@@ -18,33 +17,25 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link" href="/">Главная</a>
+                        <a class="nav-link" href="/">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/demo">Демо</a>
+                        <a class="nav-link" href="/demo">Demo</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/code-generator">Генератор кода</a>
+                        <a class="nav-link" href="/code-generator">Code Generator</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/ai-thinking">AI мышление</a>
+                        <a class="nav-link" href="/ai-thinking">AI Thinking</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/interactive-editor">Интерактивный редактор</a>
+                        <a class="nav-link" href="/interactive-editor">Interactive Editor</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/ai-learning">Система обучения</a>
+                        <a class="nav-link" href="/ai-learning">Learning System</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/documentation">API документация</a>
-                    </li>
-                </ul>
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/login">Войти</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/register">Регистрация</a>
+                        <a class="nav-link" href="/documentation">API Documentation</a>
                     </li>
                 </ul>
             </div>
@@ -60,28 +51,28 @@
             <div class="row">
                 <div class="col-md-6">
                     <h5>CodevAI</h5>
-                    <p>Интеллектуальная помощь программистам с использованием передовых алгоритмов машинного обучения</p>
+                    <p>Intelligent programming assistance using advanced machine learning algorithms</p>
                 </div>
                 <div class="col-md-3">
-                    <h5>Ссылки</h5>
+                    <h5>Links</h5>
                     <ul class="list-unstyled">
-                        <li><a href="/" class="text-light">Главная</a></li>
-                        <li><a href="/documentation" class="text-light">API документация</a></li>
-                        <li><a href="/demo" class="text-light">Демо</a></li>
+                        <li><a href="/" class="text-light">Home</a></li>
+                        <li><a href="/documentation" class="text-light">API Documentation</a></li>
+                        <li><a href="/demo" class="text-light">Demo</a></li>
                     </ul>
                 </div>
                 <div class="col-md-3">
-                    <h5>Поддержка</h5>
+                    <h5>Support</h5>
                     <ul class="list-unstyled">
-                        <li><a href="#" class="text-light">Помощь</a></li>
-                        <li><a href="#" class="text-light">Контакты</a></li>
-                        <li><a href="#" class="text-light">Политика конфиденциальности</a></li>
+                        <li><a href="#" class="text-light">Help</a></li>
+                        <li><a href="#" class="text-light">Contact</a></li>
+                        <li><a href="#" class="text-light">Privacy Policy</a></li>
                     </ul>
                 </div>
             </div>
             <hr class="mt-4">
             <div class="text-center">
-                <p>&copy; 2025 CodevAI. Все права защищены.</p>
+                <p>&copy; 2025 CodevAI. All rights reserved.</p>
             </div>
         </div>
     </footer>
