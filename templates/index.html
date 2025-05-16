@@ -6,7 +6,7 @@
 <div class="container mt-5">
     <div class="row align-items-center">
         <div class="col-lg-6">
-            <h1 class="display-4 fw-bold">CodevAI</h1>
+            <h1 class="display-4">CodevAI</h1>
             <p class="lead mb-4">Intelligent programming assistant with continuous learning capability</p>
             <p class="mb-4">
                 CodevAI is an AI-powered API that helps programmers write code, 
@@ -18,12 +18,19 @@
             </div>
         </div>
         <div class="col-lg-6">
-            <div class="card mb-4 shadow-lg">
-                <div class="card-header bg-dark text-white">
-                    <h5 class="mb-0">CodevAI Example</h5>
+            <div class="card mb-4">
+                <div class="card-header terminal-header">
+                    <div class="d-flex align-items-center">
+                        <div class="me-2">
+                            <span class="badge rounded-circle p-1 d-inline-block me-1" style="background-color: #FF5F56;"></span>
+                            <span class="badge rounded-circle p-1 d-inline-block me-1" style="background-color: #FFBD2E;"></span>
+                            <span class="badge rounded-circle p-1 d-inline-block" style="background-color: #27C93F;"></span>
+                        </div>
+                        <code>fibonacci.py</code>
+                    </div>
                 </div>
-                <div class="card-body">
-                    <pre><code class="language-python">def fibonacci(n):
+                <div class="card-body p-0">
+                    <pre class="m-0"><code class="language-python">def fibonacci(n):
     """
     This function calculates the nth Fibonacci number.
     
@@ -48,46 +55,43 @@
         <div class="col-12">
             <h2 class="text-center mb-4">Key Features</h2>
         </div>
-        <div class="col-md-4">
-            <div class="card h-100">
-                <div class="card-body">
-                    <h4 class="card-title"><i class="fas fa-code"></i> Code Generation</h4>
-                    <p class="card-text">
-                        Generates code in various programming languages based on your queries with
-                        detailed comments and documentation.
-                    </p>
+        <div class="col-md-4 mb-4">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-code"></i>
                 </div>
-                <div class="card-footer">
-                    <a href="/code-generator" class="btn btn-primary">Try It</a>
-                </div>
+                <h3>Code Generation</h3>
+                <p>
+                    Generates code in various programming languages based on your natural language queries with
+                    detailed comments and documentation.
+                </p>
+                <a href="/code-generator" class="btn btn-primary mt-3">Try It</a>
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="card h-100">
-                <div class="card-body">
-                    <h4 class="card-title"><i class="fas fa-bug"></i> Code Checking</h4>
-                    <p class="card-text">
-                        Analyzes your code for errors, vulnerabilities, and suggests ways to
-                        optimize and improve it.
-                    </p>
+        <div class="col-md-4 mb-4">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-bug"></i>
                 </div>
-                <div class="card-footer">
-                    <a href="/demo" class="btn btn-primary">Try It</a>
-                </div>
+                <h3>Code Checking</h3>
+                <p>
+                    Analyzes your code for errors, vulnerabilities, and suggests ways to
+                    optimize and improve it.
+                </p>
+                <a href="/demo" class="btn btn-primary mt-3">Try It</a>
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="card h-100">
-                <div class="card-body">
-                    <h4 class="card-title"><i class="fas fa-brain"></i> Continuous Learning</h4>
-                    <p class="card-text">
-                        The system continuously learns from new data from the Internet, improving the quality
-                        of answers and recommendations.
-                    </p>
+        <div class="col-md-4 mb-4">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-brain"></i>
                 </div>
-                <div class="card-footer">
-                    <a href="/ai-learning" class="btn btn-primary">Learn More</a>
-                </div>
+                <h3>Continuous Learning</h3>
+                <p>
+                    The system continuously learns from new data from the Internet, improving the quality
+                    of answers and recommendations.
+                </p>
+                <a href="/ai-learning" class="btn btn-primary mt-3">Learn More</a>
             </div>
         </div>
     </div>
@@ -95,72 +99,72 @@
     <div class="row mt-5 mb-5">
         <div class="col-12">
             <div class="card">
-                <div class="card-header bg-primary text-white">
+                <div class="card-header">
                     <h3 class="mb-0">Supported Programming Languages</h3>
                 </div>
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-3 col-6 mb-3">
                             <div class="d-flex align-items-center">
-                                <span class="me-2">Python</span>
+                                <span class="me-2 fw-medium">Python</span>
                                 <div class="progress flex-grow-1">
-                                    <div class="progress-bar bg-success" role="progressbar" style="width: 95%"></div>
+                                    <div class="progress-bar" role="progressbar" style="width: 95%"></div>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-3 col-6 mb-3">
                             <div class="d-flex align-items-center">
-                                <span class="me-2">JavaScript</span>
+                                <span class="me-2 fw-medium">JavaScript</span>
                                 <div class="progress flex-grow-1">
-                                    <div class="progress-bar bg-success" role="progressbar" style="width: 90%"></div>
+                                    <div class="progress-bar" role="progressbar" style="width: 90%"></div>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-3 col-6 mb-3">
                             <div class="d-flex align-items-center">
-                                <span class="me-2">Java</span>
+                                <span class="me-2 fw-medium">Java</span>
                                 <div class="progress flex-grow-1">
-                                    <div class="progress-bar bg-success" role="progressbar" style="width: 85%"></div>
+                                    <div class="progress-bar" role="progressbar" style="width: 85%"></div>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-3 col-6 mb-3">
                             <div class="d-flex align-items-center">
-                                <span class="me-2">C++</span>
+                                <span class="me-2 fw-medium">C++</span>
                                 <div class="progress flex-grow-1">
-                                    <div class="progress-bar bg-success" role="progressbar" style="width: 80%"></div>
+                                    <div class="progress-bar" role="progressbar" style="width: 80%"></div>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-3 col-6 mb-3">
                             <div class="d-flex align-items-center">
-                                <span class="me-2">Go</span>
+                                <span class="me-2 fw-medium">Go</span>
                                 <div class="progress flex-grow-1">
-                                    <div class="progress-bar bg-success" role="progressbar" style="width: 75%"></div>
+                                    <div class="progress-bar" role="progressbar" style="width: 75%"></div>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-3 col-6 mb-3">
                             <div class="d-flex align-items-center">
-                                <span class="me-2">PHP</span>
+                                <span class="me-2 fw-medium">PHP</span>
                                 <div class="progress flex-grow-1">
-                                    <div class="progress-bar bg-success" role="progressbar" style="width: 70%"></div>
+                                    <div class="progress-bar" role="progressbar" style="width: 70%"></div>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-3 col-6 mb-3">
                             <div class="d-flex align-items-center">
-                                <span class="me-2">Ruby</span>
+                                <span class="me-2 fw-medium">Ruby</span>
                                 <div class="progress flex-grow-1">
-                                    <div class="progress-bar bg-info" role="progressbar" style="width: 65%"></div>
+                                    <div class="progress-bar" role="progressbar" style="width: 65%"></div>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-3 col-6 mb-3">
                             <div class="d-flex align-items-center">
-                                <span class="me-2">Rust</span>
+                                <span class="me-2 fw-medium">Rust</span>
                                 <div class="progress flex-grow-1">
-                                    <div class="progress-bar bg-info" role="progressbar" style="width: 60%"></div>
+                                    <div class="progress-bar" role="progressbar" style="width: 60%"></div>
                                 </div>
                             </div>
                         </div>
