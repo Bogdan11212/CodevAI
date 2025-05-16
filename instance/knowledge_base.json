@@ -59,6 +59,12 @@
       "timestamp": "2025-05-16T22:29:59.109257",
       "content_snippet": "[[ resultsCount ]][[' result' + (resultsCount == 0 || resultsCount > 1 ? \"s\" : \"\") ]] for \u201c[[ filters.query.length < 50 ? filters.query : filters.query.substring(0, 50) + \"\u2026\" ]]\u201d\nYour bookmarks list i",
       "code_samples": []
+    },
+    "programming_languages_11": {
+      "source_url": "https://realpython.com/search?q=common programming errors",
+      "timestamp": "2025-05-16T22:37:44.719580",
+      "content_snippet": "[[ resultsCount ]][[' result' + (resultsCount == 0 || resultsCount > 1 ? \"s\" : \"\") ]] for \u201c[[ filters.query.length < 50 ? filters.query : filters.query.substring(0, 50) + \"\u2026\" ]]\u201d\nYour bookmarks list i",
+      "code_samples": []
     }
   },
   "libraries": {
@@ -71,6 +77,31 @@
   },
   "algorithms": {},
   "best_practices": {},
-  "common_errors": {},
-  "last_updated": "2025-05-16T22:29:59.109281"
+  "common_errors": {
+    "common_errors_1": {
+      "source_url": "https://stackoverflow.com/search?q=common programming errors",
+      "timestamp": "2025-05-16T22:36:20.366406",
+      "content_snippet": "Human verification\nAre you a human being? We apologize for the confusion, but we can't quite tell if you're a person or a script. Please don't take this personally. Bots and scripts can be remarkably ",
+      "code_samples": []
+    },
+    "common_errors_2": {
+      "source_url": "https://github.com/search?q=common programming errors&type=repositories",
+      "timestamp": "2025-05-16T22:36:41.259049",
+      "content_snippet": "repositories Search Results \u00b7 common programming errors\nFilter by\n529 results\n(164 ms)529 results\n\ud83d\udd01 The retry pattern is a common technique used in asynchronous programming to handle transient failure",
+      "code_samples": []
+    },
+    "common_errors_3": {
+      "source_url": "https://dev.to/search?q=common programming errors",
+      "timestamp": "2025-05-16T22:37:01.870349",
+      "content_snippet": "Skip to content\nNavigation menu\nSearch\nPowered by\nSearch\nAlgolia\nLog in\nCreate account\nDEV Community\nClose\nSearch\nSearch results for common programming errors\nMost Relevant\nNewest\nOldest\nPosts\nPeople\n",
+      "code_samples": []
+    },
+    "common_errors_4": {
+      "source_url": "https://medium.com/programming/search?q=common programming errors",
+      "timestamp": "2025-05-16T22:37:23.679127",
+      "content_snippet": "Open in app\nSign up\nSign in\nMedium Logo\nWrite\nSign up\nSign in\nPAGE NOT FOUND\n404\nOut of nothing, something.\nYou can find (just about) anything on Medium \u2014 apparently even a page that doesn\u2019t exist. Ma",
+      "code_samples": []
+    }
+  },
+  "last_updated": "2025-05-16T22:37:44.719611"
 }
