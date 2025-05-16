@@ -9,3 +9,4 @@ from api.language_detection import *
 from api.feedback import *
 from api.ai_thinking import *
 from api.try_api import *
+from api.web_learning import *

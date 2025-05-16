@@ -37,6 +37,11 @@ def interactive_editor():
     """Interactive code editor with integrated AI assistance"""
     return render_template('interactive_editor.html')
 
+@app.route('/ai-learning')
+def ai_learning_page():
+    """AI Learning page for continuous learning system"""
+    return render_template('ai_learning.html')
+
 @app.route('/api/learning-status')
 def learning_status():
     """API endpoint to get current learning status"""
