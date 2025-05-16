@@ -56,34 +56,53 @@ def get_webpage_content(url):
 
 def search_programming_solutions(query, language=None):
     """
-    Выполняет поиск решений по программированию
+    Performs search for programming solutions using various sources
     
     Args:
-        query (str): Поисковый запрос
-        language (str, optional): Язык программирования
+        query (str): Search query
+        language (str, optional): Programming language
         
     Returns:
-        list: Список найденных решений
+        list: List of found solutions
     """
-    # В реальной системе здесь был бы код для поиска через API
-    # или парсинга результатов поисковой выдачи
-    
-    # Этот пример демонстрирует концепцию
     try:
         search_query = query
         if language:
             search_query += f" {language} programming"
             
-        # Здесь можно добавить код для интеграции с поисковыми API или другими источниками
-        
-        # Заглушка для демо
-        return [
-            {
-                "title": f"Solution for {query} in {language or 'any language'}",
-                "description": "This is a placeholder for real search results",
-                "url": f"https://example.com/search?q={query}"
-            }
+        # List of programming-focused domains to search
+        domains = [
+            "stackoverflow.com",
+            "github.com",
+            "dev.to",
+            "medium.com/programming",
+            "realpython.com",
+            "javascript.info",
+            "python.org/doc"
         ]
+        
+        results = []
+        
+        for domain in domains:
+            # Form search URL for each domain
+            if domain == "stackoverflow.com":
+                url = f"https://stackoverflow.com/search?q={search_query}"
+            elif domain == "github.com":
+                url = f"https://github.com/search?q={search_query}&type=repositories"
+            else:
+                url = f"https://{domain}/search?q={search_query}"
+                
+            # Get content from each URL
+            content = get_webpage_content(url)
+            if content:
+                results.append({
+                    "title": f"Results from {domain}",
+                    "description": content[:200] + "...",
+                    "url": url,
+                    "source": domain
+                })
+                
+        return results
     except Exception as e:
         logger.error(f"Ошибка при поиске решений: {str(e)}")
         logger.debug(traceback.format_exc())
