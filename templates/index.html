@@ -3,111 +3,272 @@
 {% block title %}AI-Powered Programming Assistant{% endblock %}
 
 {% block content %}
-<div class="px-4 py-5 my-5 text-center">
-    <h1 class="display-5 fw-bold text-body-emphasis mb-4">
-        <i class="fas fa-code text-primary me-2"></i>CodevAI
-    </h1>
-    <div class="col-lg-8 mx-auto">
-        <p class="lead mb-4">
-            The AI-powered programming assistant with continuous learning capabilities.
-            Get intelligent code completion, error detection, and suggestions across multiple programming languages.
+<!-- Hero Section -->
+<div class="container-fluid py-5" style="background: linear-gradient(135deg, var(--background-darker) 0%, var(--background-dark) 100%);">
+    <div class="container py-5">
+        <div class="row align-items-center py-5">
+            <div class="col-lg-6 mb-5 mb-lg-0">
+                <h1 class="display-4 fw-bold mb-3" style="background: linear-gradient(90deg, #61afef, #c678dd); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                    Programming Assistant with AI Thinking
+                </h1>
+                <p class="lead mb-4">
+                    Experience an AI that doesn't just write code - it explains its thinking process.
+                    Get intelligent code completion, error detection, and insights across multiple programming languages.
+                </p>
+                <div class="d-flex gap-3 flex-wrap">
+                    <a href="{{ url_for('demo') }}" class="btn btn-primary btn-lg px-4">
+                        <i class="fas fa-play me-2"></i>Try Demo
+                    </a>
+                    <a href="{{ url_for('documentation') }}" class="btn btn-outline-secondary btn-lg px-4">
+                        <i class="fas fa-book me-2"></i>API Documentation
+                    </a>
+                </div>
+                <div class="mt-4 d-flex align-items-center">
+                    <span class="badge bg-success me-2">Open Source</span>
+                    <a href="https://github.com/bogdan1112/CodevAI" target="_blank" class="text-decoration-none">
+                        <i class="fab fa-github me-1"></i>
+                        <span>Star on GitHub</span>
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="position-relative">
+                    <div class="card bg-dark border-0 shadow-lg">
+                        <div class="card-header d-flex align-items-center" style="background-color: var(--background-darker);">
+                            <div class="rounded-circle me-2" style="width: 12px; height: 12px; background-color: #ff5f56;"></div>
+                            <div class="rounded-circle me-2" style="width: 12px; height: 12px; background-color: #ffbd2e;"></div>
+                            <div class="rounded-circle me-2" style="width: 12px; height: 12px; background-color: #27c93f;"></div>
+                            <small class="ms-2 text-muted">ai_thinking.py</small>
+                        </div>
+                        <div class="card-body p-0" style="background-color: var(--background-darker);">
+                            <div class="p-4">
+                                <div class="mb-3">
+                                    <span class="badge bg-primary mb-2">Query</span>
+                                    <div class="px-3 py-2 rounded" style="background-color: rgba(97, 175, 239, 0.1);">
+                                        Write a function to check if a string is a palindrome
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <span class="badge bg-info mb-2">AI Thinking</span>
+                                    <div class="px-3 py-2 rounded" style="background-color: rgba(86, 182, 194, 0.1); font-family: 'JetBrains Mono', monospace; font-size: 0.85rem;">
+                                        <p class="mb-1">1. A palindrome reads the same forward and backward</p>
+                                        <p class="mb-1">2. We need to compare characters from both ends</p>
+                                        <p class="mb-1">3. Ignoring case and non-alphanumeric characters would be good</p>
+                                    </div>
+                                </div>
+                                <div>
+                                    <span class="badge bg-success mb-2">Solution</span>
+                                    <pre class="mb-0 p-3 rounded" style="background-color: rgba(152, 195, 121, 0.1); font-family: 'JetBrains Mono', monospace; font-size: 0.85rem;">def is_palindrome(text):
+    # Remove non-alphanumeric and convert to lowercase
+    clean_text = ''.join(c.lower() for c in text if c.isalnum())
+    
+    # Compare the string with its reverse
+    return clean_text == clean_text[::-1]</pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="position-absolute" style="top: -15px; right: -15px; z-index: -1; width: 100%; height: 100%; background: linear-gradient(45deg, var(--primary-color) 0%, var(--accent-color) 100%); opacity: 0.1; border-radius: 0.5rem;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Features Section -->
+<div class="container py-6">
+    <div class="text-center mb-5">
+        <h6 class="text-uppercase text-primary fw-bold">Features</h6>
+        <h2 class="display-5 fw-bold mb-4">Powerful AI assistance for developers</h2>
+        <p class="lead mx-auto" style="max-width: 700px;">
+            CodevAI combines advanced AI technologies with continuous learning to provide
+            an exceptional coding assistance experience.
         </p>
-        <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-            <a href="{{ url_for('demo') }}" class="btn btn-primary btn-lg px-4 gap-3">
-                <i class="fas fa-play me-2"></i>Попробовать демо
-            </a>
-            <a href="{{ url_for('documentation') }}" class="btn btn-outline-secondary btn-lg px-4">
-                <i class="fas fa-book me-2"></i>Документация API
-            </a>
+    </div>
+    
+    <div class="row g-4 py-5">
+        <div class="col-md-6 col-lg-4">
+            <div class="card h-100 border-0">
+                <div class="card-body p-4">
+                    <div class="feature-icon d-inline-flex align-items-center justify-content-center mb-3">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3 class="card-title h5 fw-bold">AI Thinking Process</h3>
+                    <p class="card-text">See how the AI approaches problems, reasons through solutions, and explains its thought process step by step.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+            <div class="card h-100 border-0">
+                <div class="card-body p-4">
+                    <div class="feature-icon d-inline-flex align-items-center justify-content-center mb-3">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3 class="card-title h5 fw-bold">Code Completion</h3>
+                    <p class="card-text">Get intelligent code suggestions and completions for Python, JavaScript, Java, C++, and Go.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+            <div class="card h-100 border-0">
+                <div class="card-body p-4">
+                    <div class="feature-icon d-inline-flex align-items-center justify-content-center mb-3">
+                        <i class="fas fa-bug"></i>
+                    </div>
+                    <h3 class="card-title h5 fw-bold">Error Detection</h3>
+                    <p class="card-text">Identify and fix errors in your code with intelligent error detection and correction suggestions.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+            <div class="card h-100 border-0">
+                <div class="card-body p-4">
+                    <div class="feature-icon d-inline-flex align-items-center justify-content-center mb-3">
+                        <i class="fas fa-sync"></i>
+                    </div>
+                    <h3 class="card-title h5 fw-bold">Continuous Learning</h3>
+                    <p class="card-text">CodevAI learns from feedback to provide increasingly accurate and helpful suggestions over time.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+            <div class="card h-100 border-0">
+                <div class="card-body p-4">
+                    <div class="feature-icon d-inline-flex align-items-center justify-content-center mb-3">
+                        <i class="fas fa-edit"></i>
+                    </div>
+                    <h3 class="card-title h5 fw-bold">Interactive Editor</h3>
+                    <p class="card-text">New! Edit code with real-time AI assistance in our interactive editor with syntax highlighting.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+            <div class="card h-100 border-0">
+                <div class="card-body p-4">
+                    <div class="feature-icon d-inline-flex align-items-center justify-content-center mb-3">
+                        <i class="fas fa-globe"></i>
+                    </div>
+                    <h3 class="card-title h5 fw-bold">Web Search Integration</h3>
+                    <p class="card-text">Search for programming solutions and incorporate real-world examples into your code.</p>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 
-<div class="container py-5">
-    <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
-        <div class="feature col">
-            <div class="feature-icon bg-primary bg-gradient p-3 rounded mb-3">
-                <i class="fas fa-brain fa-2x text-white"></i>
-            </div>
-            <h2>Intelligent Code Completion</h2>
-            <p>Get smart code suggestions for your projects across Python, JavaScript, Java, C++, and Go.</p>
+<!-- Languages Section -->
+<div class="container-fluid py-5" style="background-color: var(--background-darker);">
+    <div class="container py-3">
+        <div class="text-center mb-5">
+            <h6 class="text-uppercase text-primary fw-bold">Languages</h6>
+            <h2 class="display-5 fw-bold mb-4">Supported Programming Languages</h2>
         </div>
-        <div class="feature col">
-            <div class="feature-icon bg-primary bg-gradient p-3 rounded mb-3">
-                <i class="fas fa-bug fa-2x text-white"></i>
+        
+        <div class="row g-4 justify-content-center">
+            <div class="col-4 col-md-2">
+                <div class="card h-100 border-0 text-center">
+                    <div class="card-body">
+                        <i class="fab fa-python fa-3x mb-3" style="color: var(--primary-color);"></i>
+                        <h4 class="h6 fw-bold">Python</h4>
+                    </div>
+                </div>
             </div>
-            <h2>Error Detection</h2>
-            <p>Identify and fix errors in your code with intelligent error detection and correction suggestions.</p>
-        </div>
-        <div class="feature col">
-            <div class="feature-icon bg-primary bg-gradient p-3 rounded mb-3">
-                <i class="fas fa-sync fa-2x text-white"></i>
+            <div class="col-4 col-md-2">
+                <div class="card h-100 border-0 text-center">
+                    <div class="card-body">
+                        <i class="fab fa-js fa-3x mb-3" style="color: var(--secondary-color);"></i>
+                        <h4 class="h6 fw-bold">JavaScript</h4>
+                    </div>
+                </div>
             </div>
-            <h2>Continuous Learning</h2>
-            <p>CodevAI learns from your feedback to provide increasingly accurate and helpful suggestions over time.</p>
-        </div>
-    </div>
-</div>
-
-<div class="container py-5 bg-dark rounded-3">
-    <h2 class="text-center mb-4">Supported Languages</h2>
-    <div class="row text-center">
-        <div class="col">
-            <div class="p-3">
-                <i class="fab fa-python fa-3x mb-3 text-primary"></i>
-                <h4>Python</h4>
+            <div class="col-4 col-md-2">
+                <div class="card h-100 border-0 text-center">
+                    <div class="card-body">
+                        <i class="fab fa-java fa-3x mb-3" style="color: var(--accent-color);"></i>
+                        <h4 class="h6 fw-bold">Java</h4>
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="col">
-            <div class="p-3">
-                <i class="fab fa-js fa-3x mb-3 text-primary"></i>
-                <h4>JavaScript</h4>
+            <div class="col-4 col-md-2">
+                <div class="card h-100 border-0 text-center">
+                    <div class="card-body">
+                        <i class="fas fa-code fa-3x mb-3" style="color: #e06c75;"></i>
+                        <h4 class="h6 fw-bold">C++</h4>
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="col">
-            <div class="p-3">
-                <i class="fab fa-java fa-3x mb-3 text-primary"></i>
-                <h4>Java</h4>
-            </div>
-        </div>
-        <div class="col">
-            <div class="p-3">
-                <i class="fas fa-code fa-3x mb-3 text-primary"></i>
-                <h4>C++</h4>
-            </div>
-        </div>
-        <div class="col">
-            <div class="p-3">
-                <i class="fab fa-golang fa-3x mb-3 text-primary"></i>
-                <h4>Go</h4>
+            <div class="col-4 col-md-2">
+                <div class="card h-100 border-0 text-center">
+                    <div class="card-body">
+                        <i class="fas fa-code-branch fa-3x mb-3" style="color: #56b6c2;"></i>
+                        <h4 class="h6 fw-bold">Go</h4>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
-<div class="container py-5">
-    <h2 class="text-center mb-5">How It Works</h2>
+<!-- How It Works Section -->
+<div class="container py-6">
+    <div class="text-center mb-5">
+        <h6 class="text-uppercase text-primary fw-bold">Process</h6>
+        <h2 class="display-5 fw-bold mb-4">How CodevAI Works</h2>
+    </div>
+    
     <div class="row g-5 align-items-center">
-        <div class="col-md-6">
-            <h3>1. Write Your Code</h3>
-            <p>Start by sending your code snippet to our API. CodevAI automatically detects the programming language.</p>
+        <div class="col-lg-5">
+            <div class="p-4 rounded-3 mb-4" style="background-color: rgba(97, 175, 239, 0.1);">
+                <h3 class="h5 fw-bold d-flex align-items-center">
+                    <span class="feature-icon d-inline-flex align-items-center justify-content-center me-3">
+                        <i class="fas fa-pen"></i>
+                    </span>
+                    1. Write Your Code
+                </h3>
+                <p class="mb-0">Send your code snippet to our API. CodevAI automatically detects the programming language.</p>
+            </div>
             
-            <h3>2. Get Intelligent Suggestions</h3>
-            <p>Receive code completions, error detection, and improvement suggestions tailored to your programming language.</p>
+            <div class="p-4 rounded-3 mb-4" style="background-color: rgba(152, 195, 121, 0.1);">
+                <h3 class="h5 fw-bold d-flex align-items-center">
+                    <span class="feature-icon d-inline-flex align-items-center justify-content-center me-3" style="background-color: rgba(152, 195, 121, 0.2); color: var(--secondary-color);">
+                        <i class="fas fa-brain"></i>
+                    </span>
+                    2. AI Thought Process
+                </h3>
+                <p class="mb-0">Our AI analyzes your code, formulates a plan, and explains its thinking step by step.</p>
+            </div>
             
-            <h3>3. Provide Feedback</h3>
-            <p>Let us know how helpful our suggestions were. Your feedback helps CodevAI learn and improve over time.</p>
+            <div class="p-4 rounded-3 mb-4" style="background-color: rgba(198, 120, 221, 0.1);">
+                <h3 class="h5 fw-bold d-flex align-items-center">
+                    <span class="feature-icon d-inline-flex align-items-center justify-content-center me-3" style="background-color: rgba(198, 120, 221, 0.2); color: var(--accent-color);">
+                        <i class="fas fa-code"></i>
+                    </span>
+                    3. Get Solutions
+                </h3>
+                <p class="mb-0">Receive code completions, error detection, and improvement suggestions tailored to your programming language.</p>
+            </div>
+            
+            <div class="p-4 rounded-3" style="background-color: rgba(224, 108, 117, 0.1);">
+                <h3 class="h5 fw-bold d-flex align-items-center">
+                    <span class="feature-icon d-inline-flex align-items-center justify-content-center me-3" style="background-color: rgba(224, 108, 117, 0.2); color: #e06c75;">
+                        <i class="fas fa-sync"></i>
+                    </span>
+                    4. Continuous Learning
+                </h3>
+                <p class="mb-0">Provide feedback on solutions. CodevAI learns and improves its suggestions over time.</p>
+            </div>
         </div>
-        <div class="col-md-6">
-            <div class="card bg-dark">
-                <div class="card-header d-flex align-items-center">
+        
+        <div class="col-lg-7">
+            <div class="card bg-dark border-0 shadow-lg">
+                <div class="card-header d-flex align-items-center" style="background-color: var(--background-darker);">
                     <div class="rounded-circle me-2" style="width: 12px; height: 12px; background-color: #ff5f56;"></div>
                     <div class="rounded-circle me-2" style="width: 12px; height: 12px; background-color: #ffbd2e;"></div>
                     <div class="rounded-circle me-2" style="width: 12px; height: 12px; background-color: #27c93f;"></div>
                     <small class="ms-2 text-muted">code_completion.py</small>
                 </div>
-                <div class="card-body">
-                    <pre class="mb-0"><code>def fibonacci(n):
+                <div class="card-body" style="background-color: var(--background-darker);">
+                    <pre class="mb-0"><code style="font-family: 'JetBrains Mono', monospace;">def fibonacci(n):
     if n <= 0:
         return 0
     elif n == 1:
@@ -115,8 +276,12 @@
     else:
         return fibonacci(n-1) + fibonacci(n-2)
 
-# CodevAI suggestion:
-# Add memoization to improve performance
+# CodevAI thinking process:
+# 1. This is a recursive implementation of Fibonacci
+# 2. It works correctly but has exponential time complexity
+# 3. We can optimize with memoization to avoid repeated calculations
+# 4. Let's implement an optimized version with O(n) time complexity
+
 def fibonacci_optimized(n, memo={}):
     if n in memo:
         return memo[n]
@@ -133,14 +298,22 @@ def fibonacci_optimized(n, memo={}):
     </div>
 </div>
 
-<div class="container py-5">
-    <div class="row">
-        <div class="col-md-8 mx-auto text-center">
-            <h2 class="mb-4">Готовы начать?</h2>
-            <p class="lead mb-5">Повысьте свой опыт программирования с помощью интеллектуальной помощи CodevAI.</p>
-            <a href="{{ url_for('demo') }}" class="btn btn-lg btn-primary">
-                <i class="fas fa-play me-2"></i>Попробовать демо
-            </a>
+<!-- CTA Section -->
+<div class="container-fluid py-5" style="background: linear-gradient(135deg, var(--background-darker) 0%, var(--background-dark) 100%);">
+    <div class="container py-5">
+        <div class="row">
+            <div class="col-md-8 mx-auto text-center">
+                <h2 class="display-5 fw-bold mb-4">Ready to get started?</h2>
+                <p class="lead mb-5">Enhance your programming experience with CodevAI's intelligent assistance.</p>
+                <div class="d-flex justify-content-center gap-3 flex-wrap">
+                    <a href="{{ url_for('demo') }}" class="btn btn-lg btn-primary">
+                        <i class="fas fa-play me-2"></i>Try Demo
+                    </a>
+                    <a href="{{ url_for('documentation') }}" class="btn btn-lg btn-outline-secondary">
+                        <i class="fas fa-book me-2"></i>View Documentation
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
 </div>
