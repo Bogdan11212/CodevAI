@@ -1,15 +1,16 @@
 import logging
+import time
 from flask import request, jsonify
 from api import api_bp
-from utils.model_utils import get_language_model, predefined_errors
 from config import Config
+from brain.cloudflare_ai import check_code_errors, detect_language
 
 logger = logging.getLogger(__name__)
 
 @api_bp.route('/check_errors', methods=['POST'])
 def check_errors():
     """
-    Check code for errors and provide suggestions
+    Check code for errors and provide suggestions using Cloudflare AI
     
     Expected JSON payload:
     {
@@ -30,50 +31,37 @@ def check_errors():
     if not code:
         return jsonify({"error": "No code provided"}), 400
     
+    # Если язык не указан, определяем его
     if language not in Config.SUPPORTED_LANGUAGES:
-        return jsonify({
-            "error": f"Unsupported language. Supported languages are: {', '.join(Config.SUPPORTED_LANGUAGES)}"
-        }), 400
+        detected_language = detect_language(code)
+        if detected_language in Config.SUPPORTED_LANGUAGES:
+            language = detected_language
+            logger.info(f"Using detected language: {language}")
+        else:
+            return jsonify({
+                "error": f"Unsupported language. Supported languages are: {', '.join(Config.SUPPORTED_LANGUAGES)}"
+            }), 400
     
     try:
         logger.debug(f"Processing error check request for language {language}")
         
-        # Demo mode - check if we have predefined errors for this code
-        errors = ["No specific errors detected"]
-        suggestions = []
-        corrected_code = code
+        start_time = time.time()
         
-        # Check if we have a predefined error fix for this code and language
-        if language in predefined_errors and code in predefined_errors[language]:
-            error_info = predefined_errors[language][code]
-            errors = error_info["errors"]
-            suggestions = error_info["suggestions"]
-            corrected_code = error_info["corrected_code"]
-        else:
-            # Simple pattern-based error detection for demo
-            if language == "python":
-                if ":" not in code and "def " in code:
-                    errors = ["SyntaxError: Missing colon in function definition"]
-                    suggestions = ["Add a colon at the end of the function definition"]
-                    corrected_code = code.replace("def ", "def ") + ":"
-                elif "if " in code and ":" not in code:
-                    errors = ["SyntaxError: Missing colon after conditional statement"]
-                    suggestions = ["Add a colon after the conditional statement"]
-            
-            elif language == "javascript":
-                if "{" not in code and "function" in code:
-                    errors = ["SyntaxError: Missing opening brace"]
-                    suggestions = ["Add an opening brace after the function declaration"]
-                    corrected_code = code + " {"
+        # Используем Cloudflare AI для проверки кода на ошибки
+        result = check_code_errors(code, language)
         
-        # Prepare response
+        # Расчитываем время обработки
+        processing_time = time.time() - start_time
+        
+        # Преобразуем результат в ожидаемый формат ответа
         response = {
-            "errors": errors,
-            "suggestions": suggestions,
-            "corrected_code": corrected_code,
+            "errors": result.get("errors", []),
+            "suggestions": result.get("suggestions", []),
+            "corrected_code": result.get("corrected_code", code),
             "language": language,
             "input_code": code,
-            "demo_mode": True
+            "processing_time": processing_time,
+            "demo_mode": False
         }
         
         return jsonify(response), 200

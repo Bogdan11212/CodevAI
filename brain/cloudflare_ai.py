@@ -48,17 +48,17 @@ def get_ai_thinking(prompt, language="general", max_thoughts=3):
         3. Окончательный ответ в виде кода или объяснения
 
         Ответ должен быть в формате JSON:
-        {
+        {{
           "thoughts": [
-            {"thought": "Первая мысль о подходе к решению", "timestamp": unix_timestamp},
-            {"thought": "Вторая мысль", "timestamp": unix_timestamp}
+            {{"thought": "Первая мысль о подходе к решению", "timestamp": 1620000000}},
+            {{"thought": "Вторая мысль", "timestamp": 1620000001}}
           ],
           "comments": [
             "Технический комментарий 1",
             "Технический комментарий 2"
           ],
           "answer": "Ваш финальный ответ в виде текста или кода"
-        }
+        }}
         """
         
         # Подготавливаем параметры запроса для @cf/meta/llama-3-8b-instruct

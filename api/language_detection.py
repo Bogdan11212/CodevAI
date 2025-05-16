@@ -1,15 +1,16 @@
 import logging
+import time
 from flask import request, jsonify
 from api import api_bp
-from utils.model_utils import get_language_model
 from config import Config
+from brain.cloudflare_ai import detect_language
 
 logger = logging.getLogger(__name__)
 
 @api_bp.route('/detect_language', methods=['POST'])
-def detect_language():
+def detect_language_api():
     """
-    Detect the programming language of the provided code
+    Detect the programming language of the provided code using Cloudflare AI
     
     Expected JSON payload:
     {
@@ -29,41 +30,37 @@ def detect_language():
         return jsonify({"error": "No code provided"}), 400
     
     try:
-        # Demo mode - simple rule-based language detection
-        logger.debug("Processing language detection request in demo mode")
+        logger.debug("Processing language detection request")
         
-        # Simple pattern-based language detection
-        detected_language = "unknown"
-        confidence = 0.7  # Default confidence
+        start_time = time.time()
         
-        # Very simple pattern checks for demo purposes
-        if "def " in code or "import " in code or "class " in code and ":" in code:
-            detected_language = "python"
-            confidence = 0.95
-        elif "function " in code or "var " in code or "let " in code or "const " in code:
-            detected_language = "javascript" 
-            confidence = 0.9
-        elif "public class " in code or "private " in code or "protected " in code:
-            detected_language = "java"
-            confidence = 0.9
-        elif "#include" in code or "int main" in code:
-            detected_language = "cpp"
-            confidence = 0.9
-        elif "package " in code or "func " in code:
-            detected_language = "go"
-            confidence = 0.85
+        # Используем Cloudflare AI для определения языка
+        detected_language = detect_language(code)
+        
+        # Расчитываем время обработки
+        processing_time = time.time() - start_time
         
         # Check if detected language is in our supported list
         supported = detected_language in Config.SUPPORTED_LANGUAGES
         
         logger.debug(f"Detected language: {detected_language}, supported: {supported}")
         
+        # Определяем уровень уверенности на основе длины кода
+        # В реальности это значение должно приходить от модели
+        if len(code) > 100:
+            confidence = 0.95
+        elif len(code) > 50:
+            confidence = 0.9
+        else:
+            confidence = 0.85
+        
         # Prepare response
         response = {
             "detected_language": detected_language,
             "supported": supported,
             "confidence": confidence,
-            "demo_mode": True
+            "processing_time": processing_time,
+            "demo_mode": False
         }
         
         if not supported:
