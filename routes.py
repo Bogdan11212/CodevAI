@@ -46,8 +46,25 @@ def ai_learning_page():
 def learning_status():
     """API endpoint to get current learning status"""
     try:
-        from brain.continuous_learning import get_learning_status
-        return jsonify(get_learning_status())
+        from brain.continuous_learning import knowledge_base, count_knowledge_items, is_learning
+        
+        # Получаем информацию о базе знаний
+        item_count = count_knowledge_items()
+        last_updated = knowledge_base.get("last_updated", "Never")
+        
+        # Формируем статус по категориям
+        categories_status = {}
+        for category in knowledge_base:
+            if category != "last_updated":
+                categories_status[category] = len(knowledge_base[category])
+        
+        return jsonify({
+            "status": "active" if is_learning else "inactive",
+            "is_learning": is_learning,
+            "total_items": item_count,
+            "last_updated": last_updated,
+            "categories": categories_status
+        })
     except Exception as e:
         logger.error(f"Error getting learning status: {str(e)}")
         return jsonify({

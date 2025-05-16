@@ -1,8 +1,27 @@
 {
-  "programming_languages": {},
+  "programming_languages": {
+    "programming_languages_1": {
+      "source_url": "https://stackoverflow.com/search?q=clean code principles",
+      "timestamp": "2025-05-16T22:14:21.833855",
+      "content_snippet": "Human verification\nAre you a human being? We apologize for the confusion, but we can't quite tell if you're a person or a script. Please don't take this personally. Bots and scripts can be remarkably ",
+      "code_samples": []
+    },
+    "programming_languages_2": {
+      "source_url": "https://dev.to/search?q=clean code principles",
+      "timestamp": "2025-05-16T22:15:12.091826",
+      "content_snippet": "Skip to content\nNavigation menu\nSearch\nPowered by\nSearch\nAlgolia\nLog in\nCreate account\nDEV Community\nClose\nSearch\nSearch results for clean code principles\nMost Relevant\nNewest\nOldest\nPosts\nPeople\nOrga",
+      "code_samples": []
+    },
+    "programming_languages_3": {
+      "source_url": "https://medium.com/programming/search?q=clean code principles",
+      "timestamp": "2025-05-16T22:15:34.637603",
+      "content_snippet": "Open in app\nSign up\nSign in\nMedium Logo\nWrite\nSign up\nSign in\nPAGE NOT FOUND\n404\nOut of nothing, something.\nYou can find (just about) anything on Medium \u2014 apparently even a page that doesn\u2019t exist. Ma",
+      "code_samples": []
+    }
+  },
   "libraries": {},
   "algorithms": {},
   "best_practices": {},
   "common_errors": {},
-  "last_updated": null
+  "last_updated": "2025-05-16T22:15:34.637702"
 }

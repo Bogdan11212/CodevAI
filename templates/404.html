@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}404 - Страница не найдена | CodevAI{% endblock %}
+
+{% block content %}
+<div class="container mt-5 text-center">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <h1 class="display-1 text-danger">404</h1>
+            <h2 class="mb-4">Страница не найдена</h2>
+            <p class="lead mb-5">Возможно, страница была перемещена или удалена, или вы ввели неверный адрес.</p>
+            
+            <div class="card mb-4">
+                <div class="card-header bg-light">
+                    <h5 class="mb-0">Может быть, вы искали:</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <a href="/" class="btn btn-outline-primary btn-block mb-2">Главная страница</a>
+                        </div>
+                        <div class="col-md-4">
+                            <a href="/demo" class="btn btn-outline-primary btn-block mb-2">Демо API</a>
+                        </div>
+                        <div class="col-md-4">
+                            <a href="/documentation" class="btn btn-outline-primary btn-block mb-2">Документация</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <pre><code class="language-python"># 404 Error handler
+def page_not_found(error):
+    return render_template('404.html'), 404</code></pre>
+            
+            <a href="/" class="btn btn-primary mt-3">Вернуться на главную</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
