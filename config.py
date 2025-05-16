@@ -5,8 +5,8 @@ class Config:
     SECRET_KEY = os.environ.get('SESSION_SECRET', 'dev-secret-key')
     DEBUG = True
     
-    # Database settings
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL', 'sqlite:///codevai.db')
+    # Database settings - используем локальную SQLite базу данных
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///instance/codevai.db'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     
     # API settings

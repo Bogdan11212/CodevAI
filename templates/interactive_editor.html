@@ -1,0 +1,927 @@
+{% extends 'layout.html' %}
+
+{% block title %}Интерактивный редактор кода{% endblock %}
+
+{% block extra_css %}
+<style>
+    .editor-container {
+        display: flex;
+        height: calc(100vh - 200px);
+        min-height: 500px;
+        margin-bottom: 20px;
+        border-radius: 6px;
+        overflow: hidden;
+    }
+    
+    .code-editor {
+        flex: 1;
+        height: 100%;
+        border: 1px solid #3e4452;
+        border-radius: 6px 0 0 6px;
+    }
+    
+    .output-panel {
+        flex: 1;
+        height: 100%;
+        border: 1px solid #3e4452;
+        border-left: none;
+        border-radius: 0 6px 6px 0;
+        overflow-y: auto;
+        padding: 10px;
+        background-color: #21252b;
+        color: #abb2bf;
+    }
+    
+    .action-panel {
+        background-color: #21252b;
+        border-radius: 6px;
+        padding: 15px;
+        margin-bottom: 20px;
+    }
+    
+    .tab-panel {
+        margin-bottom: 15px;
+    }
+    
+    .nav-tabs .nav-link {
+        color: #abb2bf;
+        border: none;
+        background-color: transparent;
+    }
+    
+    .nav-tabs .nav-link.active {
+        color: #61afef;
+        border-bottom: 2px solid #61afef;
+        background-color: transparent;
+    }
+    
+    .thinking-step {
+        padding: 12px;
+        margin-bottom: 10px;
+        border-left: 3px solid #61afef;
+        background-color: rgba(97, 175, 239, 0.1);
+        animation: fade-in 0.5s ease-in-out;
+    }
+    
+    .thinking-comment {
+        padding: 12px;
+        margin-bottom: 10px;
+        border-left: 3px solid #98c379;
+        background-color: rgba(152, 195, 121, 0.1);
+        animation: fade-in 0.5s ease-in-out;
+    }
+    
+    .thinking-answer {
+        padding: 15px;
+        background-color: #282c34;
+        border-radius: 6px;
+        border-left: 3px solid #c678dd;
+        margin-top: 20px;
+        font-family: 'Courier New', monospace;
+        white-space: pre-wrap;
+    }
+    
+    .output-header {
+        border-bottom: 1px solid #3e4452;
+        padding-bottom: 10px;
+        margin-bottom: 15px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .version-badge {
+        font-size: 12px;
+        background-color: #3e4452;
+        padding: 3px 6px;
+        border-radius: 4px;
+    }
+    
+    @keyframes fade-in {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    /* Версионность */
+    .version-list {
+        max-height: 150px;
+        overflow-y: auto;
+        margin-bottom: 15px;
+    }
+    
+    .version-item {
+        padding: 8px;
+        margin-bottom: 5px;
+        border-radius: 4px;
+        background-color: #282c34;
+        cursor: pointer;
+        transition: background-color 0.2s;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .version-item:hover {
+        background-color: #3e4452;
+    }
+    
+    .version-item.active {
+        background-color: rgba(97, 175, 239, 0.2);
+        border-left: 3px solid #61afef;
+    }
+    
+    /* Многоязычный интерфейс */
+    .language-selector {
+        margin-bottom: 15px;
+    }
+    
+    /* Интеграция с системами контроля версий */
+    .git-panel {
+        margin-top: 15px;
+        padding: 10px;
+        background-color: #282c34;
+        border-radius: 4px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <h1 class="mb-4">Интерактивный редактор кода</h1>
+    
+    <div class="row">
+        <div class="col-md-3">
+            <div class="action-panel">
+                <!-- Языки программирования -->
+                <h5 class="mb-3">Язык программирования</h5>
+                <select id="language-select" class="form-select mb-4">
+                    <option value="javascript">JavaScript</option>
+                    <option value="typescript">TypeScript</option>
+                    <option value="python">Python</option>
+                    <option value="java">Java</option>
+                    <option value="csharp">C#</option>
+                    <option value="cpp">C++</option>
+                    <option value="go">Go</option>
+                    <option value="ruby">Ruby</option>
+                    <option value="php">PHP</option>
+                    <option value="swift">Swift</option>
+                    <option value="kotlin">Kotlin</option>
+                </select>
+                
+                <!-- Выбор темы -->
+                <h5 class="mb-3">Тема редактора</h5>
+                <select id="theme-select" class="form-select mb-4">
+                    <option value="vs-dark">Dark</option>
+                    <option value="vs">Light</option>
+                    <option value="hc-black">High Contrast Dark</option>
+                    <option value="hc-light">High Contrast Light</option>
+                </select>
+                
+                <!-- Действия -->
+                <h5 class="mb-3">Действия</h5>
+                <div class="d-grid gap-2">
+                    <button id="complete-code-btn" class="btn btn-primary">
+                        <i class="fas fa-magic me-2"></i> Завершить код
+                    </button>
+                    <button id="check-errors-btn" class="btn btn-info">
+                        <i class="fas fa-check-circle me-2"></i> Проверить ошибки
+                    </button>
+                    <button id="ai-thinking-btn" class="btn btn-warning">
+                        <i class="fas fa-brain me-2"></i> Размышления ИИ
+                    </button>
+                    <button id="save-version-btn" class="btn btn-success">
+                        <i class="fas fa-save me-2"></i> Сохранить версию
+                    </button>
+                </div>
+                
+                <!-- Многоязычный интерфейс -->
+                <h5 class="mt-4 mb-3">Язык интерфейса</h5>
+                <div class="language-selector">
+                    <div class="btn-group w-100" role="group">
+                        <button type="button" class="btn btn-sm btn-outline-primary active" onclick="changeUILanguage('ru')">Русский</button>
+                        <button type="button" class="btn btn-sm btn-outline-primary" onclick="changeUILanguage('en')">English</button>
+                    </div>
+                </div>
+                
+                <!-- Интеграция с Git -->
+                <h5 class="mt-4 mb-3">Git интеграция</h5>
+                <div class="git-panel">
+                    <div class="mb-3">
+                        <select id="git-provider" class="form-select form-select-sm">
+                            <option value="github">GitHub</option>
+                            <option value="gitlab">GitLab</option>
+                            <option value="bitbucket">Bitbucket</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <input type="text" class="form-control form-control-sm" id="repo-url" placeholder="URL репозитория">
+                    </div>
+                    <div class="d-grid">
+                        <button class="btn btn-sm btn-secondary" id="push-to-git-btn">
+                            <i class="fas fa-code-branch me-1"></i> Отправить в репозиторий
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- История версий (версионность) -->
+            <div class="action-panel">
+                <h5 class="mb-3">История версий</h5>
+                <div class="version-list" id="version-list">
+                    <!-- Здесь будут отображаться сохраненные версии -->
+                </div>
+                <div class="d-flex mt-2">
+                    <button class="btn btn-sm btn-outline-danger me-2" id="delete-version-btn" disabled>
+                        <i class="fas fa-trash"></i>
+                    </button>
+                    <button class="btn btn-sm btn-outline-success flex-grow-1" id="compare-versions-btn" disabled>
+                        <i class="fas fa-exchange-alt me-1"></i> Сравнить версии
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-9">
+            <div class="editor-container">
+                <!-- Редактор кода (левая панель) -->
+                <div id="code-editor" class="code-editor"></div>
+                
+                <!-- Панель вывода (правая панель) -->
+                <div class="output-panel">
+                    <div class="output-header">
+                        <h5 class="mb-0">Результат</h5>
+                        <span class="version-badge" id="current-version">v1.0</span>
+                    </div>
+                    
+                    <!-- Вкладки для разных типов вывода -->
+                    <ul class="nav nav-tabs" id="output-tabs" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="suggestions-tab" data-bs-toggle="tab" data-bs-target="#suggestions" type="button" role="tab">
+                                Предложения
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="errors-tab" data-bs-toggle="tab" data-bs-target="#errors" type="button" role="tab">
+                                Ошибки
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="thinking-tab" data-bs-toggle="tab" data-bs-target="#thinking" type="button" role="tab">
+                                Размышления ИИ
+                            </button>
+                        </li>
+                    </ul>
+                    
+                    <!-- Содержимое вкладок -->
+                    <div class="tab-content mt-3">
+                        <div class="tab-pane fade show active" id="suggestions" role="tabpanel">
+                            <div id="suggestions-content"></div>
+                        </div>
+                        <div class="tab-pane fade" id="errors" role="tabpanel">
+                            <div id="errors-content"></div>
+                        </div>
+                        <div class="tab-pane fade" id="thinking" role="tabpanel">
+                            <div id="thinking-content"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Модальное окно сравнения версий -->
+<div class="modal fade" id="compare-modal" tabindex="-1">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content bg-dark text-light">
+            <div class="modal-header">
+                <h5 class="modal-title">Сравнение версий</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6 id="version1-title">Версия 1</h6>
+                        <div id="version1-editor" style="height: 400px; border: 1px solid #3e4452;"></div>
+                    </div>
+                    <div class="col-md-6">
+                        <h6 id="version2-title">Версия 2</h6>
+                        <div id="version2-editor" style="height: 400px; border: 1px solid #3e4452;"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<!-- Подключение Monaco Editor -->
+<script src="/node_modules/monaco-editor/min/vs/loader.js"></script>
+<script>
+    // Настройка загрузчика Monaco
+    require.config({ paths: { 'vs': '/node_modules/monaco-editor/min/vs' }});
+    
+    // Глобальные переменные
+    let editor, compareEditor1, compareEditor2;
+    let currentLanguage = 'javascript';
+    let currentTheme = 'vs-dark';
+    let versionCounter = 1;
+    let savedVersions = [];
+    let currentVersion = { id: 0, label: 'v1.0', date: new Date() };
+    
+    // UI тексты для многоязычности
+    const uiTexts = {
+        'ru': {
+            'complete_code': 'Завершить код',
+            'check_errors': 'Проверить ошибки',
+            'ai_thinking': 'Размышления ИИ',
+            'save_version': 'Сохранить версию',
+            'push_to_git': 'Отправить в репозиторий',
+            'compare_versions': 'Сравнить версии',
+            'delete_version': 'Удалить',
+            'suggestions': 'Предложения',
+            'errors': 'Ошибки',
+            'thinking': 'Размышления ИИ',
+            'language': 'Язык программирования',
+            'theme': 'Тема редактора',
+            'actions': 'Действия',
+            'ui_language': 'Язык интерфейса',
+            'git_integration': 'Git интеграция',
+            'version_history': 'История версий'
+        },
+        'en': {
+            'complete_code': 'Complete Code',
+            'check_errors': 'Check Errors',
+            'ai_thinking': 'AI Thinking',
+            'save_version': 'Save Version',
+            'push_to_git': 'Push to Repository',
+            'compare_versions': 'Compare Versions',
+            'delete_version': 'Delete',
+            'suggestions': 'Suggestions',
+            'errors': 'Errors',
+            'thinking': 'AI Thinking',
+            'language': 'Programming Language',
+            'theme': 'Editor Theme',
+            'actions': 'Actions',
+            'ui_language': 'Interface Language',
+            'git_integration': 'Git Integration',
+            'version_history': 'Version History'
+        }
+    };
+    
+    let currentUILanguage = 'ru';
+    
+    // Функция для изменения языка интерфейса
+    function changeUILanguage(lang) {
+        if (uiTexts[lang]) {
+            currentUILanguage = lang;
+            updateUITexts();
+            
+            // Обновить кнопки языков
+            document.querySelectorAll('.language-selector .btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector(`.language-selector .btn[onclick="changeUILanguage('${lang}')"]`).classList.add('active');
+        }
+    }
+    
+    // Обновление текстов интерфейса
+    function updateUITexts() {
+        const texts = uiTexts[currentUILanguage];
+        
+        document.getElementById('complete-code-btn').innerHTML = `<i class="fas fa-magic me-2"></i> ${texts.complete_code}`;
+        document.getElementById('check-errors-btn').innerHTML = `<i class="fas fa-check-circle me-2"></i> ${texts.check_errors}`;
+        document.getElementById('ai-thinking-btn').innerHTML = `<i class="fas fa-brain me-2"></i> ${texts.ai_thinking}`;
+        document.getElementById('save-version-btn').innerHTML = `<i class="fas fa-save me-2"></i> ${texts.save_version}`;
+        document.getElementById('push-to-git-btn').innerHTML = `<i class="fas fa-code-branch me-1"></i> ${texts.push_to_git}`;
+        document.getElementById('compare-versions-btn').innerHTML = `<i class="fas fa-exchange-alt me-1"></i> ${texts.compare_versions}`;
+        
+        document.getElementById('suggestions-tab').textContent = texts.suggestions;
+        document.getElementById('errors-tab').textContent = texts.errors;
+        document.getElementById('thinking-tab').textContent = texts.thinking;
+        
+        // Обновляем заголовки и пр.
+        document.querySelectorAll('h5').forEach(h5 => {
+            const key = h5.textContent.toLowerCase().replace(/\s+/g, '_');
+            if (texts[key]) {
+                h5.textContent = texts[key];
+            }
+        });
+    }
+    
+    // Инициализация редактора когда загрузится DOM
+    document.addEventListener('DOMContentLoaded', function() {
+        require(['vs/editor/editor.main'], function() {
+            // Инициализация основного редактора
+            editor = monaco.editor.create(document.getElementById('code-editor'), {
+                value: '// Введите код здесь\n',
+                language: currentLanguage,
+                theme: currentTheme,
+                automaticLayout: true,
+                minimap: { enabled: true }
+            });
+            
+            // Слушаем изменения в редакторе
+            editor.onDidChangeModelContent(function(e) {
+                // Здесь можно добавить логику для кэширования запросов
+                // Например, сохранять текущий код в localStorage
+                localStorage.setItem('cached_code', editor.getValue());
+            });
+            
+            // Инициализация редакторов для сравнения версий
+            compareEditor1 = monaco.editor.create(document.getElementById('version1-editor'), {
+                value: '',
+                language: currentLanguage,
+                theme: currentTheme,
+                readOnly: true,
+                minimap: { enabled: false }
+            });
+            
+            compareEditor2 = monaco.editor.create(document.getElementById('version2-editor'), {
+                value: '',
+                language: currentLanguage,
+                theme: currentTheme,
+                readOnly: true,
+                minimap: { enabled: false }
+            });
+            
+            // Обработчики событий для селекторов
+            document.getElementById('language-select').addEventListener('change', function() {
+                currentLanguage = this.value;
+                monaco.editor.setModelLanguage(editor.getModel(), currentLanguage);
+            });
+            
+            document.getElementById('theme-select').addEventListener('change', function() {
+                currentTheme = this.value;
+                monaco.editor.setTheme(currentTheme);
+            });
+            
+            // Загрузка кэшированного кода, если есть
+            const cachedCode = localStorage.getItem('cached_code');
+            if (cachedCode) {
+                editor.setValue(cachedCode);
+            }
+            
+            // Загрузка сохраненных версий из localStorage
+            const savedVersionsJson = localStorage.getItem('saved_versions');
+            if (savedVersionsJson) {
+                try {
+                    savedVersions = JSON.parse(savedVersionsJson);
+                    refreshVersionList();
+                    
+                    // Обновляем счетчик версий
+                    if (savedVersions.length > 0) {
+                        const lastVersionId = Math.max(...savedVersions.map(v => v.id));
+                        versionCounter = lastVersionId + 1;
+                    }
+                } catch (e) {
+                    console.error('Ошибка при загрузке сохраненных версий:', e);
+                }
+            }
+            
+            // Инициализация обработчиков для кнопок действий
+            setupActionHandlers();
+        });
+    });
+    
+    // Настройка обработчиков действий
+    function setupActionHandlers() {
+        // Завершение кода
+        document.getElementById('complete-code-btn').addEventListener('click', function() {
+            const code = editor.getValue();
+            if (!code.trim()) {
+                showMessage('suggestions', 'Пожалуйста, введите код для завершения', 'warning');
+                return;
+            }
+            
+            showMessage('suggestions', 'Обрабатываем ваш запрос...', 'info');
+            
+            fetch('/api/complete', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    code: code,
+                    language: currentLanguage
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.completion) {
+                    editor.setValue(data.completion);
+                    showMessage('suggestions', 'Код успешно завершен!', 'success');
+                } else {
+                    showMessage('suggestions', 'Не удалось завершить код. Пожалуйста, попробуйте другой фрагмент.', 'error');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showMessage('suggestions', 'Произошла ошибка при обработке запроса.', 'error');
+            });
+        });
+        
+        // Проверка ошибок
+        document.getElementById('check-errors-btn').addEventListener('click', function() {
+            const code = editor.getValue();
+            if (!code.trim()) {
+                showMessage('errors', 'Пожалуйста, введите код для проверки', 'warning');
+                return;
+            }
+            
+            showMessage('errors', 'Проверяем код на ошибки...', 'info');
+            
+            // Переключаемся на вкладку с ошибками
+            document.getElementById('errors-tab').click();
+            
+            fetch('/api/check_errors', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    code: code,
+                    language: currentLanguage
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                let errorsContent = document.getElementById('errors-content');
+                errorsContent.innerHTML = '';
+                
+                if (data.errors && data.errors.length > 0) {
+                    // Отображаем найденные ошибки
+                    let errorList = document.createElement('div');
+                    errorList.className = 'mb-4';
+                    
+                    data.errors.forEach(error => {
+                        let errorItem = document.createElement('div');
+                        errorItem.className = 'alert alert-danger';
+                        errorItem.textContent = typeof error === 'string' ? error : `Ошибка в строке ${error.line}: ${error.message || error.description}`;
+                        errorList.appendChild(errorItem);
+                    });
+                    
+                    errorsContent.appendChild(errorList);
+                    
+                    // Показываем предложения по исправлению
+                    if (data.suggestions && data.suggestions.length > 0) {
+                        let suggestionsTitle = document.createElement('h6');
+                        suggestionsTitle.textContent = 'Предложения по исправлению:';
+                        errorsContent.appendChild(suggestionsTitle);
+                        
+                        let suggestionsList = document.createElement('ul');
+                        suggestionsList.className = 'list-group mb-4';
+                        
+                        data.suggestions.forEach(suggestion => {
+                            let suggestionItem = document.createElement('li');
+                            suggestionItem.className = 'list-group-item bg-dark text-light';
+                            suggestionItem.textContent = suggestion;
+                            suggestionsList.appendChild(suggestionItem);
+                        });
+                        
+                        errorsContent.appendChild(suggestionsList);
+                    }
+                    
+                    // Показываем исправленный код, если есть
+                    if (data.corrected_code) {
+                        let correctedTitle = document.createElement('h6');
+                        correctedTitle.textContent = 'Исправленный код:';
+                        errorsContent.appendChild(correctedTitle);
+                        
+                        let correctedCode = document.createElement('pre');
+                        correctedCode.className = 'thinking-answer';
+                        correctedCode.textContent = data.corrected_code;
+                        
+                        let applyButton = document.createElement('button');
+                        applyButton.className = 'btn btn-primary mt-2';
+                        applyButton.textContent = 'Применить исправления';
+                        applyButton.addEventListener('click', function() {
+                            editor.setValue(data.corrected_code);
+                            showMessage('errors', 'Исправления применены!', 'success');
+                        });
+                        
+                        errorsContent.appendChild(correctedCode);
+                        errorsContent.appendChild(applyButton);
+                    }
+                } else {
+                    // Если ошибок нет
+                    let noErrorsMessage = document.createElement('div');
+                    noErrorsMessage.className = 'alert alert-success';
+                    noErrorsMessage.textContent = 'Ошибок не найдено!';
+                    errorsContent.appendChild(noErrorsMessage);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showMessage('errors', 'Произошла ошибка при проверке кода.', 'error');
+            });
+        });
+        
+        // Размышления ИИ
+        document.getElementById('ai-thinking-btn').addEventListener('click', function() {
+            const code = editor.getValue();
+            if (!code.trim()) {
+                showMessage('thinking', 'Пожалуйста, введите код для анализа', 'warning');
+                return;
+            }
+            
+            showMessage('thinking', 'ИИ анализирует ваш код...', 'info');
+            
+            // Переключаемся на вкладку с размышлениями
+            document.getElementById('thinking-tab').click();
+            
+            fetch('/api/ai-thinking', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    prompt: `Анализируй этот код: ${code}`,
+                    language: currentLanguage,
+                    max_thoughts: 5
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                let thinkingContent = document.getElementById('thinking-content');
+                thinkingContent.innerHTML = '';
+                
+                // Отображаем мысли ИИ
+                if (data.thoughts && data.thoughts.length > 0) {
+                    let thoughtsTitle = document.createElement('h6');
+                    thoughtsTitle.textContent = 'Ход размышлений:';
+                    thinkingContent.appendChild(thoughtsTitle);
+                    
+                    data.thoughts.forEach(thought => {
+                        let thoughtElement = document.createElement('div');
+                        thoughtElement.className = 'thinking-step';
+                        thoughtElement.textContent = thought.thought;
+                        thinkingContent.appendChild(thoughtElement);
+                    });
+                }
+                
+                // Отображаем комментарии
+                if (data.comments && data.comments.length > 0) {
+                    let commentsTitle = document.createElement('h6');
+                    commentsTitle.className = 'mt-4';
+                    commentsTitle.textContent = 'Комментарии:';
+                    thinkingContent.appendChild(commentsTitle);
+                    
+                    data.comments.forEach(comment => {
+                        let commentElement = document.createElement('div');
+                        commentElement.className = 'thinking-comment';
+                        commentElement.textContent = comment;
+                        thinkingContent.appendChild(commentElement);
+                    });
+                }
+                
+                // Отображаем ответ
+                if (data.answer) {
+                    let answerTitle = document.createElement('h6');
+                    answerTitle.className = 'mt-4';
+                    answerTitle.textContent = 'Ответ ИИ:';
+                    thinkingContent.appendChild(answerTitle);
+                    
+                    let answerElement = document.createElement('div');
+                    answerElement.className = 'thinking-answer';
+                    answerElement.textContent = data.answer;
+                    thinkingContent.appendChild(answerElement);
+                    
+                    // Если это улучшенный код, добавляем кнопку применения
+                    if (data.answer.includes('{') || data.answer.includes('def ')) {
+                        let applyButton = document.createElement('button');
+                        applyButton.className = 'btn btn-primary mt-2';
+                        applyButton.textContent = 'Применить этот код';
+                        applyButton.addEventListener('click', function() {
+                            editor.setValue(data.answer);
+                            showMessage('thinking', 'Код применен!', 'success');
+                        });
+                        
+                        thinkingContent.appendChild(applyButton);
+                    }
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showMessage('thinking', 'Произошла ошибка при анализе кода.', 'error');
+            });
+        });
+        
+        // Сохранение версии
+        document.getElementById('save-version-btn').addEventListener('click', function() {
+            const code = editor.getValue();
+            if (!code.trim()) {
+                alert('Нет кода для сохранения');
+                return;
+            }
+            
+            const versionLabel = `v${versionCounter}.0`;
+            const newVersion = {
+                id: versionCounter,
+                label: versionLabel,
+                date: new Date(),
+                code: code,
+                language: currentLanguage
+            };
+            
+            savedVersions.push(newVersion);
+            versionCounter++;
+            
+            // Сохраняем версии в localStorage
+            localStorage.setItem('saved_versions', JSON.stringify(savedVersions));
+            
+            // Обновляем список версий
+            refreshVersionList();
+            
+            // Обновляем текущую версию
+            currentVersion = newVersion;
+            document.getElementById('current-version').textContent = versionLabel;
+            
+            showMessage('suggestions', `Версия ${versionLabel} сохранена!`, 'success');
+        });
+        
+        // Сравнение версий
+        document.getElementById('compare-versions-btn').addEventListener('click', function() {
+            const selectedVersions = document.querySelectorAll('.version-item.active');
+            if (selectedVersions.length !== 2) {
+                alert('Пожалуйста, выберите две версии для сравнения');
+                return;
+            }
+            
+            const version1Id = parseInt(selectedVersions[0].getAttribute('data-version-id'));
+            const version2Id = parseInt(selectedVersions[1].getAttribute('data-version-id'));
+            
+            const version1 = savedVersions.find(v => v.id === version1Id);
+            const version2 = savedVersions.find(v => v.id === version2Id);
+            
+            if (version1 && version2) {
+                // Устанавливаем код в редакторы сравнения
+                compareEditor1.setValue(version1.code);
+                compareEditor2.setValue(version2.code);
+                
+                // Обновляем заголовки
+                document.getElementById('version1-title').textContent = `Версия ${version1.label} (${new Date(version1.date).toLocaleString()})`;
+                document.getElementById('version2-title').textContent = `Версия ${version2.label} (${new Date(version2.date).toLocaleString()})`;
+                
+                // Устанавливаем язык
+                monaco.editor.setModelLanguage(compareEditor1.getModel(), version1.language || currentLanguage);
+                monaco.editor.setModelLanguage(compareEditor2.getModel(), version2.language || currentLanguage);
+                
+                // Показываем модальное окно
+                new bootstrap.Modal(document.getElementById('compare-modal')).show();
+            }
+        });
+        
+        // Удаление версии
+        document.getElementById('delete-version-btn').addEventListener('click', function() {
+            const selectedVersions = document.querySelectorAll('.version-item.active');
+            if (selectedVersions.length !== 1) {
+                alert('Пожалуйста, выберите одну версию для удаления');
+                return;
+            }
+            
+            const versionId = parseInt(selectedVersions[0].getAttribute('data-version-id'));
+            
+            if (confirm('Вы уверены, что хотите удалить эту версию?')) {
+                const index = savedVersions.findIndex(v => v.id === versionId);
+                if (index !== -1) {
+                    savedVersions.splice(index, 1);
+                    localStorage.setItem('saved_versions', JSON.stringify(savedVersions));
+                    refreshVersionList();
+                }
+            }
+        });
+        
+        // Интеграция с Git
+        document.getElementById('push-to-git-btn').addEventListener('click', function() {
+            const code = editor.getValue();
+            const provider = document.getElementById('git-provider').value;
+            const repoUrl = document.getElementById('repo-url').value;
+            
+            if (!code.trim()) {
+                alert('Нет кода для отправки');
+                return;
+            }
+            
+            if (!repoUrl) {
+                alert('Пожалуйста, введите URL репозитория');
+                return;
+            }
+            
+            // Здесь будет реальная логика отправки кода в репозиторий
+            // Для демо просто показываем сообщение
+            alert(`Имитация отправки кода в ${provider} репозиторий: ${repoUrl}`);
+        });
+    }
+    
+    // Обновление списка версий
+    function refreshVersionList() {
+        const versionList = document.getElementById('version-list');
+        versionList.innerHTML = '';
+        
+        savedVersions.forEach(version => {
+            const versionItem = document.createElement('div');
+            versionItem.className = 'version-item';
+            versionItem.setAttribute('data-version-id', version.id);
+            
+            // Форматируем дату
+            const date = new Date(version.date);
+            const formattedDate = `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`;
+            
+            versionItem.innerHTML = `
+                <span>${version.label}</span>
+                <small>${formattedDate}</small>
+            `;
+            
+            // Обработчик клика по версии
+            versionItem.addEventListener('click', function(e) {
+                // Если нажата клавиша Ctrl, добавляем к выбору (для сравнения)
+                if (e.ctrlKey) {
+                    this.classList.toggle('active');
+                } else {
+                    // Иначе выбираем только одну версию
+                    document.querySelectorAll('.version-item').forEach(item => {
+                        item.classList.remove('active');
+                    });
+                    this.classList.add('active');
+                    
+                    // Загружаем код выбранной версии в редактор
+                    const versionId = parseInt(this.getAttribute('data-version-id'));
+                    const selectedVersion = savedVersions.find(v => v.id === versionId);
+                    
+                    if (selectedVersion) {
+                        editor.setValue(selectedVersion.code);
+                        
+                        // Если версия имеет другой язык, обновляем и селектор языка
+                        if (selectedVersion.language && selectedVersion.language !== currentLanguage) {
+                            currentLanguage = selectedVersion.language;
+                            document.getElementById('language-select').value = currentLanguage;
+                            monaco.editor.setModelLanguage(editor.getModel(), currentLanguage);
+                        }
+                        
+                        // Обновляем текущую версию
+                        currentVersion = selectedVersion;
+                        document.getElementById('current-version').textContent = selectedVersion.label;
+                    }
+                }
+                
+                // Обновляем состояние кнопок
+                updateButtonStates();
+            });
+            
+            versionList.appendChild(versionItem);
+        });
+        
+        // По умолчанию кнопки отключены
+        updateButtonStates();
+    }
+    
+    // Обновление состояния кнопок управления версиями
+    function updateButtonStates() {
+        const selectedVersions = document.querySelectorAll('.version-item.active');
+        
+        document.getElementById('delete-version-btn').disabled = selectedVersions.length !== 1;
+        document.getElementById('compare-versions-btn').disabled = selectedVersions.length !== 2;
+    }
+    
+    // Отображение сообщений в различных табах
+    function showMessage(tab, message, type) {
+        const contentId = `${tab}-content`;
+        const content = document.getElementById(contentId);
+        
+        if (content) {
+            // Если тип 'info', просто заменяем содержимое
+            if (type === 'info') {
+                content.innerHTML = `<div class="alert alert-info">${message}</div>`;
+            } else {
+                // Иначе добавляем сообщение вверху
+                const alert = document.createElement('div');
+                alert.className = `alert alert-${type} alert-dismissible fade show`;
+                alert.innerHTML = `
+                    ${message}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                `;
+                
+                content.insertBefore(alert, content.firstChild);
+                
+                // Автоматически скрываем сообщение через 5 секунд
+                if (type === 'success' || type === 'warning') {
+                    setTimeout(() => {
+                        alert.remove();
+                    }, 5000);
+                }
+            }
+        }
+    }
+</script>
+{% endblock %}
