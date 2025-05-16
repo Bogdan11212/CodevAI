@@ -1,7 +1,7 @@
 # CodevAI: Programming Assistant with AI Thinking
 
 <div align="center">
-  <img src="https://raw.githubusercontent.com/bogdan1112/CodevAI/main/static/img/codevai-logo.svg" alt="CodevAI Logo" width="250">
+  <img src="https://raw.githubusercontent.com/Bogdan11212/CodevAI/main/static/img/codevai-logo.svg" alt="CodevAI Logo" width="250">
   
   <p>
     <strong>An AI-powered programming assistant that explains its thought process</strong>
@@ -19,17 +19,17 @@
   </p>
   
   <p>
-    <a href="https://github.com/bogdan1112/CodevAI/blob/main/LICENSE">
-      <img src="https://img.shields.io/github/license/bogdan1112/CodevAI?style=flat-square" alt="License">
+    <a href="https://github.com/Bogdan11212/CodevAI/blob/main/LICENSE">
+      <img src="https://img.shields.io/github/license/Bogdan11212/CodevAI?style=flat-square" alt="License">
     </a>
-    <a href="https://github.com/bogdan1112/CodevAI/stargazers">
-      <img src="https://img.shields.io/github/stars/bogdan1112/CodevAI?style=flat-square" alt="Stars">
+    <a href="https://github.com/Bogdan11212/CodevAI/stargazers">
+      <img src="https://img.shields.io/github/stars/Bogdan11212/CodevAI?style=flat-square" alt="Stars">
     </a>
-    <a href="https://github.com/bogdan1112/CodevAI/network/members">
-      <img src="https://img.shields.io/github/forks/bogdan1112/CodevAI?style=flat-square" alt="Forks">
+    <a href="https://github.com/Bogdan11212/CodevAI/network/members">
+      <img src="https://img.shields.io/github/forks/Bogdan11212/CodevAI?style=flat-square" alt="Forks">
     </a>
-    <a href="https://github.com/bogdan1112/CodevAI/issues">
-      <img src="https://img.shields.io/github/issues/bogdan1112/CodevAI?style=flat-square" alt="Issues">
+    <a href="https://github.com/Bogdan11212/CodevAI/issues">
+      <img src="https://img.shields.io/github/issues/Bogdan11212/CodevAI?style=flat-square" alt="Issues">
     </a>
   </p>
 </div>
@@ -155,7 +155,7 @@ Content-Type: application/json
 
 1. Clone the repository
 ```bash
-git clone https://github.com/bogdan1112/CodevAI.git
+git clone https://github.com/Bogdan11212/CodevAI.git
 cd CodevAI
 ```
 
@@ -252,7 +252,7 @@ CodevAI follows a modular architecture with several key components:
 
 ## Contributing
 
-We welcome contributions from the community! See [CONTRIBUTING.md](https://github.com/bogdan1112/CodevAI/blob/main/CONTRIBUTING.md) for guidelines.
+We welcome contributions from the community! See [CONTRIBUTING.md](https://github.com/Bogdan11212/CodevAI/blob/main/CONTRIBUTING.md) for guidelines.
 
 ### Development Setup
 
@@ -264,7 +264,7 @@ We welcome contributions from the community! See [CONTRIBUTING.md](https://githu
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](https://github.com/bogdan1112/CodevAI/blob/main/LICENSE) file for details.
+This project is licensed under the MIT License - see the [LICENSE](https://github.com/Bogdan11212/CodevAI/blob/main/LICENSE) file for details.
 
 ## Acknowledgements
 
@@ -277,7 +277,7 @@ This project is licensed under the MIT License - see the [LICENSE](https://githu
 <div align="center">
   <p>Made with ❤️ by the CodevAI Team</p>
   <p>
-    <a href="https://github.com/bogdan1112">GitHub</a> •
-    <a href="https://twitter.com/bogdan1112">Twitter</a>
+    <a href="https://github.com/Bogdan11212">GitHub</a> •
+    <a href="https://twitter.com/Bogdan11212">Twitter</a>
   </p>
 </div>

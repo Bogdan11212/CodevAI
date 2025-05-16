@@ -1,5 +1,5 @@
 """
-Модуль для работы с Cloudflare AI Workers
+Module for working with Cloudflare AI Workers
 """
 
 import os
@@ -11,10 +11,10 @@ import traceback
 
 logger = logging.getLogger(__name__)
 
-# Проверяем наличие токена Cloudflare AI
+# Check for Cloudflare AI token
 CLOUDFLARE_AI_TOKEN = os.environ.get("CLOUDFLARE_AI_TOKEN")
 if not CLOUDFLARE_AI_TOKEN:
-    logger.warning("Cloudflare AI токен не найден. Для работы в реальном режиме необходим токен.")
+    logger.warning("Cloudflare AI token not found. A valid token is required for real-time operation.")
 
 # Базовый URL для Cloudflare AI Workers
 CLOUDFLARE_AI_URL = "https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/run/"
