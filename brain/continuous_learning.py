@@ -114,3 +114,13 @@ def extract_knowledge_from_content(content, url, topic=None):
         # Extract code blocks
         import re
         code_blocks = re.findall(r'```[a-z]*\n(.*?)\n```', content, re.DOTALL)
+        
+        # Process the extracted code blocks
+        processed_blocks = []
+        for block in code_blocks:
+            processed_blocks.append(block.strip())
+            
+        return processed_blocks
+    except Exception as e:
+        logger.error(f"Error extracting knowledge: {str(e)}")
+        return []
