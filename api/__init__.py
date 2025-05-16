@@ -7,3 +7,4 @@ from api.code_completion import *
 from api.error_checking import *
 from api.language_detection import *
 from api.feedback import *
+from api.ai_thinking import *

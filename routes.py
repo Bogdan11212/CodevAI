@@ -27,6 +27,11 @@ def code_generator():
     """Code generation page with continuous learning"""
     return render_template('code_generator.html')
 
+@app.route('/ai-thinking')
+def ai_thinking_page():
+    """AI Thinking page that shows the model's thought process"""
+    return render_template('ai_thinking.html')
+
 @app.route('/api/learning-status')
 def learning_status():
     """API endpoint to get current learning status"""
