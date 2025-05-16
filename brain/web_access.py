@@ -1,5 +1,5 @@
 """
-Модуль для доступа к интернету и получения данных для обучения ИИ
+Module for internet access and retrieving data for AI training
 """
 
 import requests

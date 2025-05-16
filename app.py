@@ -45,5 +45,9 @@ with app.app_context():
     
     # Import routes
     from routes import *
+    
+    # Initialize continuous learning on application startup
+    from brain.continuous_learning import start_continuous_learning
+    start_continuous_learning()
 
     logger.info("Application initialized successfully")

@@ -40,18 +40,16 @@ def interactive_editor():
 @app.route('/api/learning-status')
 def learning_status():
     """API endpoint to get current learning status"""
-    # В реальном приложении здесь запрашивались бы данные из БД
-    # Для демо возвращаем фиктивные данные
     try:
-        from utils.learning_utils import model_improvement_stats
-        return jsonify(model_improvement_stats)
+        from brain.continuous_learning import get_learning_status
+        return jsonify(get_learning_status())
     except Exception as e:
-        # В случае ошибки возвращаем фиктивные данные
+        logger.error(f"Error getting learning status: {str(e)}")
         return jsonify({
-            "iterations": 5,
-            "last_updated": datetime.utcnow().isoformat(),
-            "improvements": [],
-            "total_samples_processed": 25
+            "error": "Failed to get learning status",
+            "is_learning": False,
+            "knowledge_items": 0,
+            "last_updated": datetime.utcnow().isoformat()
         })
 
 @app.errorhandler(404)
