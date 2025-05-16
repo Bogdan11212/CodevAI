@@ -1,0 +1,74 @@
+/* Custom styles for CodevAI */
+
+/* Code blocks */
+pre {
+    background-color: #2b2b2b;
+    color: #f8f8f2;
+    border-radius: 0.25rem;
+    padding: 1rem;
+    overflow-x: auto;
+}
+
+pre code {
+    color: inherit;
+}
+
+/* API key input */
+.api-key-container {
+    font-family: 'Courier New', monospace;
+    letter-spacing: 0.5px;
+}
+
+/* Feature icons */
+.feature-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 4rem;
+    height: 4rem;
+    border-radius: 0.75rem;
+}
+
+/* Documentation sidebar */
+.sticky-top {
+    max-height: calc(100vh - 40px);
+    overflow-y: auto;
+}
+
+/* Code snippet styling in documentation */
+.card-header code {
+    color: #f8f8f2;
+    background: transparent;
+    padding: 0;
+}
+
+/* Rating stars */
+.rating {
+    color: #ffc107;
+}
+
+/* Terminal background for code examples */
+.card .card-header.terminal-header {
+    background-color: #2b2b2b;
+    color: #f8f8f2;
+    border-bottom: none;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #343a40;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #6c757d;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #5a6268;
+}

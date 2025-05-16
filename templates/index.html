@@ -1,0 +1,147 @@
+{% extends 'layout.html' %}
+
+{% block title %}AI-Powered Programming Assistant{% endblock %}
+
+{% block content %}
+<div class="px-4 py-5 my-5 text-center">
+    <h1 class="display-5 fw-bold text-body-emphasis mb-4">
+        <i class="fas fa-code text-primary me-2"></i>CodevAI
+    </h1>
+    <div class="col-lg-8 mx-auto">
+        <p class="lead mb-4">
+            The AI-powered programming assistant with continuous learning capabilities.
+            Get intelligent code completion, error detection, and suggestions across multiple programming languages.
+        </p>
+        <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+            <a href="{{ url_for('demo') }}" class="btn btn-primary btn-lg px-4 gap-3">
+                <i class="fas fa-play me-2"></i>Попробовать демо
+            </a>
+            <a href="{{ url_for('documentation') }}" class="btn btn-outline-secondary btn-lg px-4">
+                <i class="fas fa-book me-2"></i>Документация API
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="container py-5">
+    <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
+        <div class="feature col">
+            <div class="feature-icon bg-primary bg-gradient p-3 rounded mb-3">
+                <i class="fas fa-brain fa-2x text-white"></i>
+            </div>
+            <h2>Intelligent Code Completion</h2>
+            <p>Get smart code suggestions for your projects across Python, JavaScript, Java, C++, and Go.</p>
+        </div>
+        <div class="feature col">
+            <div class="feature-icon bg-primary bg-gradient p-3 rounded mb-3">
+                <i class="fas fa-bug fa-2x text-white"></i>
+            </div>
+            <h2>Error Detection</h2>
+            <p>Identify and fix errors in your code with intelligent error detection and correction suggestions.</p>
+        </div>
+        <div class="feature col">
+            <div class="feature-icon bg-primary bg-gradient p-3 rounded mb-3">
+                <i class="fas fa-sync fa-2x text-white"></i>
+            </div>
+            <h2>Continuous Learning</h2>
+            <p>CodevAI learns from your feedback to provide increasingly accurate and helpful suggestions over time.</p>
+        </div>
+    </div>
+</div>
+
+<div class="container py-5 bg-dark rounded-3">
+    <h2 class="text-center mb-4">Supported Languages</h2>
+    <div class="row text-center">
+        <div class="col">
+            <div class="p-3">
+                <i class="fab fa-python fa-3x mb-3 text-primary"></i>
+                <h4>Python</h4>
+            </div>
+        </div>
+        <div class="col">
+            <div class="p-3">
+                <i class="fab fa-js fa-3x mb-3 text-primary"></i>
+                <h4>JavaScript</h4>
+            </div>
+        </div>
+        <div class="col">
+            <div class="p-3">
+                <i class="fab fa-java fa-3x mb-3 text-primary"></i>
+                <h4>Java</h4>
+            </div>
+        </div>
+        <div class="col">
+            <div class="p-3">
+                <i class="fas fa-code fa-3x mb-3 text-primary"></i>
+                <h4>C++</h4>
+            </div>
+        </div>
+        <div class="col">
+            <div class="p-3">
+                <i class="fab fa-golang fa-3x mb-3 text-primary"></i>
+                <h4>Go</h4>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container py-5">
+    <h2 class="text-center mb-5">How It Works</h2>
+    <div class="row g-5 align-items-center">
+        <div class="col-md-6">
+            <h3>1. Write Your Code</h3>
+            <p>Start by sending your code snippet to our API. CodevAI automatically detects the programming language.</p>
+            
+            <h3>2. Get Intelligent Suggestions</h3>
+            <p>Receive code completions, error detection, and improvement suggestions tailored to your programming language.</p>
+            
+            <h3>3. Provide Feedback</h3>
+            <p>Let us know how helpful our suggestions were. Your feedback helps CodevAI learn and improve over time.</p>
+        </div>
+        <div class="col-md-6">
+            <div class="card bg-dark">
+                <div class="card-header d-flex align-items-center">
+                    <div class="rounded-circle me-2" style="width: 12px; height: 12px; background-color: #ff5f56;"></div>
+                    <div class="rounded-circle me-2" style="width: 12px; height: 12px; background-color: #ffbd2e;"></div>
+                    <div class="rounded-circle me-2" style="width: 12px; height: 12px; background-color: #27c93f;"></div>
+                    <small class="ms-2 text-muted">code_completion.py</small>
+                </div>
+                <div class="card-body">
+                    <pre class="mb-0"><code>def fibonacci(n):
+    if n <= 0:
+        return 0
+    elif n == 1:
+        return 1
+    else:
+        return fibonacci(n-1) + fibonacci(n-2)
+
+# CodevAI suggestion:
+# Add memoization to improve performance
+def fibonacci_optimized(n, memo={}):
+    if n in memo:
+        return memo[n]
+    if n <= 0:
+        return 0
+    elif n == 1:
+        return 1
+    else:
+        memo[n] = fibonacci_optimized(n-1, memo) + fibonacci_optimized(n-2, memo)
+        return memo[n]</code></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container py-5">
+    <div class="row">
+        <div class="col-md-8 mx-auto text-center">
+            <h2 class="mb-4">Готовы начать?</h2>
+            <p class="lead mb-5">Повысьте свой опыт программирования с помощью интеллектуальной помощи CodevAI.</p>
+            <a href="{{ url_for('demo') }}" class="btn btn-lg btn-primary">
+                <i class="fas fa-play me-2"></i>Попробовать демо
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,298 @@
+{% extends 'layout.html' %}
+
+{% block title %}API Documentation{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-3 mb-4">
+        <div class="card sticky-top" style="top: 20px; z-index: 1;">
+            <div class="card-header">
+                <h5 class="mb-0">Contents</h5>
+            </div>
+            <div class="card-body p-0">
+                <div class="list-group list-group-flush">
+                    <a href="#introduction" class="list-group-item list-group-item-action">Introduction</a>
+                    <a href="#authentication" class="list-group-item list-group-item-action">Authentication</a>
+                    <a href="#endpoints" class="list-group-item list-group-item-action">API Endpoints</a>
+                    <a href="#code-completion" class="list-group-item list-group-item-action ps-4">Code Completion</a>
+                    <a href="#error-checking" class="list-group-item list-group-item-action ps-4">Error Checking</a>
+                    <a href="#language-detection" class="list-group-item list-group-item-action ps-4">Language Detection</a>
+                    <a href="#feedback" class="list-group-item list-group-item-action ps-4">Feedback</a>
+                    <a href="#supported-languages" class="list-group-item list-group-item-action">Supported Languages</a>
+                    <a href="#rate-limits" class="list-group-item list-group-item-action">Rate Limits</a>
+                    <a href="#errors" class="list-group-item list-group-item-action">Errors</a>
+                    <a href="#examples" class="list-group-item list-group-item-action">Code Examples</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-9">
+        <div class="card mb-4">
+            <div class="card-body">
+                <section id="introduction">
+                    <h2 class="border-bottom pb-2 mb-4">Introduction</h2>
+                    <p>
+                        CodevAI is an AI-powered programming assistant API that provides code completion, error checking, and suggestions
+                        across multiple programming languages. The API is designed to help developers write better code more efficiently.
+                    </p>
+                    <p>
+                        <strong>Current Version:</strong> {{ model_info.version }}<br>
+                        <strong>Base Model:</strong> {{ model_info.base_model }}<br>
+                        <strong>Last Updated:</strong> {{ model_info.last_updated }}
+                    </p>
+                </section>
+                
+                <section id="authentication" class="mt-5">
+                    <h2 class="border-bottom pb-2 mb-4">Authentication</h2>
+                    <p>
+                        All API requests require authentication using an API key. You can obtain your API key from your dashboard
+                        after creating an account.
+                    </p>
+                    <p>Include your API key in the request headers:</p>
+                    <pre><code>X-API-Key: your_api_key_here</code></pre>
+                    <p>Alternatively, you can pass it as a query parameter:</p>
+                    <pre><code>https://example.com/api/endpoint?api_key=your_api_key_here</code></pre>
+                </section>
+                
+                <section id="endpoints" class="mt-5">
+                    <h2 class="border-bottom pb-2 mb-4">API Endpoints</h2>
+                    <p>The API provides the following endpoints for interacting with CodevAI:</p>
+                    
+                    <section id="code-completion" class="mt-4">
+                        <h3>Code Completion</h3>
+                        <div class="card">
+                            <div class="card-header">
+                                <code>POST /api/complete</code>
+                            </div>
+                            <div class="card-body">
+                                <p>Generate completions for code snippets.</p>
+                                <h5>Request Body</h5>
+                                <pre><code>{
+  "code": "def fibonacci(n):",
+  "language": "python",  // optional, defaults to "python"
+  "max_tokens": 100      // optional, defaults to 50
+}</code></pre>
+                                <h5>Response</h5>
+                                <pre><code>{
+  "completion": "    if n <= 0:\n        return 0\n    elif n == 1:\n        return 1\n    else:\n        return fibonacci(n-1) + fibonacci(n-2)",
+  "language": "python",
+  "input_code": "def fibonacci(n):"
+}</code></pre>
+                            </div>
+                        </div>
+                    </section>
+                    
+                    <section id="error-checking" class="mt-4">
+                        <h3>Error Checking</h3>
+                        <div class="card">
+                            <div class="card-header">
+                                <code>POST /api/check_errors</code>
+                            </div>
+                            <div class="card-body">
+                                <p>Check code for errors and get suggestions for fixes.</p>
+                                <h5>Request Body</h5>
+                                <pre><code>{
+  "code": "def fibonacci(n):\n    if n <= 0:\n        return 0\n    elif n == 1\n        return 1\n    else:\n        return fibonacci(n-1) + fibonacci(n-2)",
+  "language": "python"  // optional, defaults to "python"
+}</code></pre>
+                                <h5>Response</h5>
+                                <pre><code>{
+  "errors": ["SyntaxError: Missing colon after 'elif n == 1'"],
+  "suggestions": ["Add a colon after 'elif n == 1'"],
+  "corrected_code": "def fibonacci(n):\n    if n <= 0:\n        return 0\n    elif n == 1:\n        return 1\n    else:\n        return fibonacci(n-1) + fibonacci(n-2)",
+  "language": "python",
+  "input_code": "def fibonacci(n):\n    if n <= 0:\n        return 0\n    elif n == 1\n        return 1\n    else:\n        return fibonacci(n-1) + fibonacci(n-2)"
+}</code></pre>
+                            </div>
+                        </div>
+                    </section>
+                    
+                    <section id="language-detection" class="mt-4">
+                        <h3>Language Detection</h3>
+                        <div class="card">
+                            <div class="card-header">
+                                <code>POST /api/detect_language</code>
+                            </div>
+                            <div class="card-body">
+                                <p>Detect the programming language of a code snippet.</p>
+                                <h5>Request Body</h5>
+                                <pre><code>{
+  "code": "function factorial(n) {\n  if (n === 0 || n === 1) {\n    return 1;\n  }\n  return n * factorial(n - 1);\n}"
+}</code></pre>
+                                <h5>Response</h5>
+                                <pre><code>{
+  "detected_language": "javascript",
+  "supported": true,
+  "confidence": 0.85
+}</code></pre>
+                            </div>
+                        </div>
+                    </section>
+                    
+                    <section id="feedback" class="mt-4">
+                        <h3>Feedback</h3>
+                        <div class="card">
+                            <div class="card-header">
+                                <code>POST /api/feedback</code>
+                            </div>
+                            <div class="card-body">
+                                <p>Submit feedback on the model's output to improve future results.</p>
+                                <h5>Request Body</h5>
+                                <pre><code>{
+  "code_input": "def fibonacci(n):",
+  "model_output": "def fibonacci(n):\n    if n <= 0:\n        return 0\n    elif n == 1:\n        return 1\n    else:\n        return fibonacci(n-1) + fibonacci(n-2)",
+  "corrected_output": "def fibonacci(n):\n    if n <= 0:\n        return 0\n    elif n == 1:\n        return 1\n    else:\n        return fibonacci(n-1) + fibonacci(n-2)",
+  "language": "python",
+  "feedback_type": "completion",  // "completion", "error", or "suggestion"
+  "rating": 4  // optional, 1-5 rating
+}</code></pre>
+                                <h5>Response</h5>
+                                <pre><code>{
+  "message": "Feedback submitted successfully",
+  "feedback_id": 123
+}</code></pre>
+                            </div>
+                        </div>
+                    </section>
+                </section>
+                
+                <section id="supported-languages" class="mt-5">
+                    <h2 class="border-bottom pb-2 mb-4">Supported Languages</h2>
+                    <p>CodevAI currently supports the following programming languages:</p>
+                    <div class="row text-center">
+                        {% for language in model_info.supported_languages %}
+                        <div class="col-md-4 mb-3">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ language|capitalize }}</h5>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </section>
+                
+                <section id="rate-limits" class="mt-5">
+                    <h2 class="border-bottom pb-2 mb-4">Rate Limits</h2>
+                    <p>
+                        To ensure fair usage and service stability, API requests are subject to rate limiting:
+                    </p>
+                    <ul>
+                        <li>100 requests per hour</li>
+                        <li>1,000 requests per day</li>
+                    </ul>
+                    <p>
+                        If you exceed the rate limits, you'll receive a <code>429 Too Many Requests</code> response.
+                        The response headers include information about your current rate limit status:
+                    </p>
+                    <pre><code>X-RateLimit-Limit: 100
+X-RateLimit-Remaining: 45
+X-RateLimit-Reset: 1623456789</code></pre>
+                </section>
+                
+                <section id="errors" class="mt-5">
+                    <h2 class="border-bottom pb-2 mb-4">Errors</h2>
+                    <p>
+                        The API uses conventional HTTP response codes to indicate the success or failure of a request.
+                        In general, codes in the <code>2xx</code> range indicate success, codes in the <code>4xx</code> range
+                        indicate an error that resulted from the provided information, and codes in the <code>5xx</code> range
+                        indicate an error with our servers.
+                    </p>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Code</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><code>200 - OK</code></td>
+                                    <td>Request succeeded</td>
+                                </tr>
+                                <tr>
+                                    <td><code>400 - Bad Request</code></td>
+                                    <td>Invalid request parameters</td>
+                                </tr>
+                                <tr>
+                                    <td><code>401 - Unauthorized</code></td>
+                                    <td>Invalid or missing API key</td>
+                                </tr>
+                                <tr>
+                                    <td><code>429 - Too Many Requests</code></td>
+                                    <td>Rate limit exceeded</td>
+                                </tr>
+                                <tr>
+                                    <td><code>500 - Internal Server Error</code></td>
+                                    <td>An error occurred on the server</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+                
+                <section id="examples" class="mt-5">
+                    <h2 class="border-bottom pb-2 mb-4">Code Examples</h2>
+                    <div class="mb-4">
+                        <h3>Python</h3>
+                        <pre><code>import requests
+
+API_KEY = "your_api_key_here"
+API_URL = "https://example.com/api"
+
+def complete_code(code, language="python"):
+    """Get code completion from CodevAI"""
+    response = requests.post(
+        f"{API_URL}/complete",
+        headers={"X-API-Key": API_KEY},
+        json={"code": code, "language": language}
+    )
+    return response.json()
+
+# Example usage
+code = "def fibonacci(n):"
+result = complete_code(code)
+print(result["completion"])</code></pre>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h3>JavaScript</h3>
+                        <pre><code>const API_KEY = "your_api_key_here";
+const API_URL = "https://example.com/api";
+
+async function completeCode(code, language = "javascript") {
+  const response = await fetch(`${API_URL}/complete`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-API-Key': API_KEY
+    },
+    body: JSON.stringify({ code, language })
+  });
+  
+  return response.json();
+}
+
+// Example usage
+const code = "function factorial(n) {";
+completeCode(code)
+  .then(result => console.log(result.completion))
+  .catch(error => console.error('Error:', error));</code></pre>
+                    </div>
+                    
+                    <div>
+                        <h3>curl</h3>
+                        <pre><code>curl -X POST \
+  -H "Content-Type: application/json" \
+  -H "X-API-Key: your_api_key_here" \
+  -d '{"code": "def fibonacci(n):", "language": "python"}' \
+  https://example.com/api/complete</code></pre>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

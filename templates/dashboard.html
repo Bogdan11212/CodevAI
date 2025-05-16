@@ -1,0 +1,311 @@
+{% extends 'layout.html' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block extra_css %}
+<style>
+    .api-key-container {
+        font-family: monospace;
+        background-color: rgba(255, 255, 255, 0.1);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12 mb-4">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title mb-0">Welcome, {{ user.username }}!</h3>
+            </div>
+            <div class="card-body">
+                <h5 class="text-muted mb-4">Your API Key</h5>
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control api-key-container" value="{{ user.api_key }}" id="apiKey" readonly>
+                    <button class="btn btn-outline-secondary" type="button" id="copyApiKey">
+                        <i class="fas fa-copy"></i> Copy
+                    </button>
+                    <button class="btn btn-outline-danger" type="button" id="regenerateApiKey" data-bs-toggle="modal" data-bs-target="#confirmRegenerateModal">
+                        <i class="fas fa-sync-alt"></i> Regenerate
+                    </button>
+                </div>
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle me-2"></i> 
+                    Include this API key in your requests to authenticate with the CodevAI API.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4 mb-4">
+        <div class="card h-100">
+            <div class="card-header">
+                <h5 class="card-title mb-0">API Usage Statistics</h5>
+            </div>
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <span>Feedback Submitted</span>
+                    <span class="badge bg-primary rounded-pill">{{ feedback_count }}</span>
+                </div>
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <span>API Requests</span>
+                    <span class="badge bg-primary rounded-pill">0</span>
+                </div>
+                <div class="d-flex justify-content-between align-items-center">
+                    <span>Languages Used</span>
+                    <span class="badge bg-primary rounded-pill">0</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4 mb-4">
+        <div class="card h-100">
+            <div class="card-header">
+                <h5 class="card-title mb-0">Model Information</h5>
+            </div>
+            <div class="card-body">
+                <p><strong>Version:</strong> {{ model_info.version }}</p>
+                <p><strong>Base Model:</strong> {{ model_info.base_model }}</p>
+                <p><strong>Last Updated:</strong> {{ model_info.last_updated }}</p>
+                <p><strong>Supported Languages:</strong></p>
+                <div>
+                    {% for language in model_info.supported_languages %}
+                    <span class="badge bg-info me-1">{{ language }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4 mb-4">
+        <div class="card h-100">
+            <div class="card-header">
+                <h5 class="card-title mb-0">Quick Links</h5>
+            </div>
+            <div class="card-body">
+                <div class="list-group">
+                    <a href="{{ url_for('documentation') }}" class="list-group-item list-group-item-action">
+                        <i class="fas fa-book me-2"></i> API Documentation
+                    </a>
+                    <a href="#" class="list-group-item list-group-item-action" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        <i class="fas fa-code me-2"></i> Code Examples
+                    </a>
+                    <a href="https://github.com/YourUsername/codevai" target="_blank" class="list-group-item list-group-item-action">
+                        <i class="fab fa-github me-2"></i> GitHub Repository
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12 mb-4">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="card-title mb-0">Recent Feedback</h5>
+                <a href="{{ url_for('api.get_feedback') }}" class="btn btn-sm btn-outline-primary">View All</a>
+            </div>
+            <div class="card-body">
+                {% if recent_feedback %}
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Language</th>
+                                <th>Type</th>
+                                <th>Rating</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for feedback in recent_feedback %}
+                            <tr>
+                                <td>{{ feedback.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
+                                <td>{{ feedback.language }}</td>
+                                <td>{{ feedback.feedback_type }}</td>
+                                <td>
+                                    {% if feedback.rating %}
+                                    <div class="rating">
+                                        {% for i in range(feedback.rating) %}
+                                        <i class="fas fa-star text-warning"></i>
+                                        {% endfor %}
+                                        {% for i in range(5 - feedback.rating) %}
+                                        <i class="far fa-star text-warning"></i>
+                                        {% endfor %}
+                                    </div>
+                                    {% else %}
+                                    <span class="text-muted">No rating</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <div class="text-center py-4">
+                    <p class="mb-0 text-muted">No feedback submitted yet</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modals -->
+<div class="modal fade" id="confirmRegenerateModal" tabindex="-1" aria-labelledby="confirmRegenerateModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmRegenerateModalLabel">Confirm API Key Regeneration</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-warning">
+                    <i class="fas fa-exclamation-triangle me-2"></i>
+                    <strong>Warning:</strong> Regenerating your API key will invalidate your existing key. Any applications using the current key will stop working.
+                </div>
+                <p>Are you sure you want to regenerate your API key?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-danger" id="confirmRegenerate">Regenerate</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">API Usage Examples</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <ul class="nav nav-tabs" id="exampleTabs" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="python-tab" data-bs-toggle="tab" data-bs-target="#python" type="button" role="tab" aria-controls="python" aria-selected="true">Python</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="javascript-tab" data-bs-toggle="tab" data-bs-target="#javascript" type="button" role="tab" aria-controls="javascript" aria-selected="false">JavaScript</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="curl-tab" data-bs-toggle="tab" data-bs-target="#curl" type="button" role="tab" aria-controls="curl" aria-selected="false">cURL</button>
+                    </li>
+                </ul>
+                <div class="tab-content mt-3" id="exampleTabsContent">
+                    <div class="tab-pane fade show active" id="python" role="tabpanel" aria-labelledby="python-tab">
+                        <pre><code>import requests
+
+API_KEY = "{{ user.api_key }}"
+API_URL = "http://localhost:5000/api"
+
+def complete_code(code, language="python"):
+    """Get code completion from CodevAI"""
+    response = requests.post(
+        f"{API_URL}/complete",
+        headers={"X-API-Key": API_KEY},
+        json={"code": code, "language": language}
+    )
+    return response.json()
+
+# Example usage
+code = "def fibonacci(n):"
+result = complete_code(code)
+print(result["completion"])</code></pre>
+                    </div>
+                    <div class="tab-pane fade" id="javascript" role="tabpanel" aria-labelledby="javascript-tab">
+                        <pre><code>const API_KEY = "{{ user.api_key }}";
+const API_URL = "http://localhost:5000/api";
+
+async function completeCode(code, language = "javascript") {
+  const response = await fetch(`${API_URL}/complete`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-API-Key': API_KEY
+    },
+    body: JSON.stringify({ code, language })
+  });
+  
+  return response.json();
+}
+
+// Example usage
+const code = "function factorial(n) {";
+completeCode(code)
+  .then(result => console.log(result.completion))
+  .catch(error => console.error('Error:', error));</code></pre>
+                    </div>
+                    <div class="tab-pane fade" id="curl" role="tabpanel" aria-labelledby="curl-tab">
+                        <pre><code>curl -X POST \
+  -H "Content-Type: application/json" \
+  -H "X-API-Key: {{ user.api_key }}" \
+  -d '{"code": "def fibonacci(n):", "language": "python"}' \
+  http://localhost:5000/api/complete</code></pre>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Copy API key to clipboard
+        const copyApiKeyBtn = document.getElementById('copyApiKey');
+        const apiKeyInput = document.getElementById('apiKey');
+        
+        copyApiKeyBtn.addEventListener('click', function() {
+            apiKeyInput.select();
+            document.execCommand('copy');
+            
+            // Show toast or update button text temporarily
+            const originalText = copyApiKeyBtn.innerHTML;
+            copyApiKeyBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+            
+            setTimeout(function() {
+                copyApiKeyBtn.innerHTML = originalText;
+            }, 2000);
+        });
+        
+        // Regenerate API key
+        const confirmRegenerateBtn = document.getElementById('confirmRegenerate');
+        
+        confirmRegenerateBtn.addEventListener('click', function() {
+            fetch('{{ url_for("auth.regenerate_api_key") }}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.api_key) {
+                    apiKeyInput.value = data.api_key;
+                    
+                    // Close modal and show success message
+                    const modal = bootstrap.Modal.getInstance(document.getElementById('confirmRegenerateModal'));
+                    modal.hide();
+                    
+                    // Could show a success alert here
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                // Show error message
+            });
+        });
+    });
+</script>
+{% endblock %}

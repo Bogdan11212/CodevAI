@@ -1,0 +1,217 @@
+{% extends 'layout.html' %}
+
+{% block title %}Demo - Test the API{% endblock %}
+
+{% block extra_css %}
+<style>
+    .code-editor {
+        font-family: 'Courier New', monospace;
+        min-height: 200px;
+        resize: vertical;
+    }
+    
+    .output-container {
+        min-height: 200px;
+        max-height: 400px;
+        overflow-y: auto;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <h1 class="mb-4">CodevAI API Demo</h1>
+    
+    <div class="card mb-4">
+        <div class="card-header">
+            <h5 class="mb-0">Try the API</h5>
+        </div>
+        <div class="card-body">
+            <div class="row mb-3">
+                <div class="col-md-3">
+                    <label for="apiEndpoint" class="form-label">API Endpoint</label>
+                    <select class="form-select" id="apiEndpoint">
+                        <option value="complete">Code Completion</option>
+                        <option value="check_errors">Error Checking</option>
+                        <option value="detect_language">Language Detection</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label for="language" class="form-label">Programming Language</label>
+                    <select class="form-select" id="language">
+                        {% for language in model_info.supported_languages %}
+                        <option value="{{ language }}">{{ language|capitalize }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label for="maxTokens" class="form-label">Max Tokens</label>
+                    <input type="number" class="form-control" id="maxTokens" value="100">
+                </div>
+                <div class="col-md-3">
+                    <label for="submitBtn" class="form-label d-block">&nbsp;</label>
+                    <button id="submitBtn" class="btn btn-primary w-100">
+                        <i class="fas fa-paper-plane me-2"></i>Submit
+                    </button>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <label for="codeInput" class="form-label">Code Input</label>
+                    <textarea id="codeInput" class="form-control code-editor">def fibonacci(n):</textarea>
+                </div>
+                <div class="col-md-6">
+                    <label for="apiOutput" class="form-label">API Output</label>
+                    <div id="apiOutput" class="form-control output-container p-3">
+                        <div class="text-muted text-center">
+                            <i class="fas fa-code me-2"></i>Submit code to see results
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="card">
+        <div class="card-header">
+            <h5 class="mb-0">Code Examples</h5>
+        </div>
+        <div class="card-body">
+            <ul class="nav nav-tabs" id="exampleTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="python-tab" data-bs-toggle="tab" data-bs-target="#python" type="button" role="tab" aria-controls="python" aria-selected="true">Python</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="javascript-tab" data-bs-toggle="tab" data-bs-target="#javascript" type="button" role="tab" aria-controls="javascript" aria-selected="false">JavaScript</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="java-tab" data-bs-toggle="tab" data-bs-target="#java" type="button" role="tab" aria-controls="java" aria-selected="false">Java</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="cpp-tab" data-bs-toggle="tab" data-bs-target="#cpp" type="button" role="tab" aria-controls="cpp" aria-selected="false">C++</button>
+                </li>
+            </ul>
+            <div class="tab-content mt-3" id="exampleTabsContent">
+                <div class="tab-pane fade show active" id="python" role="tabpanel" aria-labelledby="python-tab">
+                    <div>
+                        <button class="btn btn-sm btn-outline-primary load-example" data-code="def fibonacci(n):">Fibonacci Function</button>
+                        <button class="btn btn-sm btn-outline-primary load-example" data-code="def quicksort(arr):">Quicksort Algorithm</button>
+                        <button class="btn btn-sm btn-outline-primary load-example" data-code="class Node:">Binary Tree Node</button>
+                        <button class="btn btn-sm btn-outline-primary load-example" data-code="def fibonacci(n)\n    if n <= 0:\n        return 0\n    elif n == 1\n        return 1\n    else:\n        return fibonacci(n-1) + fibonacci(n-2)">Code with Error</button>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="javascript" role="tabpanel" aria-labelledby="javascript-tab">
+                    <div>
+                        <button class="btn btn-sm btn-outline-primary load-example" data-code="function fibonacci(n) {">Fibonacci Function</button>
+                        <button class="btn btn-sm btn-outline-primary load-example" data-code="function quickSort(arr) {">Quicksort Algorithm</button>
+                        <button class="btn btn-sm btn-outline-primary load-example" data-code="class TreeNode {">Binary Tree Node</button>
+                        <button class="btn btn-sm btn-outline-primary load-example" data-code="function factorial(n) {\n  if (n === 0 || n === 1\n    return 1;\n  }\n  return n * factorial(n - 1);\n}">Code with Error</button>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="java" role="tabpanel" aria-labelledby="java-tab">
+                    <div>
+                        <button class="btn btn-sm btn-outline-primary load-example" data-code="public int fibonacci(int n) {">Fibonacci Function</button>
+                        <button class="btn btn-sm btn-outline-primary load-example" data-code="public void quickSort(int[] arr, int low, int high) {">Quicksort Algorithm</button>
+                        <button class="btn btn-sm btn-outline-primary load-example" data-code="public class TreeNode {">Binary Tree Node</button>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="cpp" role="tabpanel" aria-labelledby="cpp-tab">
+                    <div>
+                        <button class="btn btn-sm btn-outline-primary load-example" data-code="int fibonacci(int n) {">Fibonacci Function</button>
+                        <button class="btn btn-sm btn-outline-primary load-example" data-code="void quickSort(int arr[], int low, int high) {">Quicksort Algorithm</button>
+                        <button class="btn btn-sm btn-outline-primary load-example" data-code="struct TreeNode {">Binary Tree Node</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const apiEndpointSelect = document.getElementById('apiEndpoint');
+        const languageSelect = document.getElementById('language');
+        const maxTokensInput = document.getElementById('maxTokens');
+        const codeInput = document.getElementById('codeInput');
+        const apiOutput = document.getElementById('apiOutput');
+        const submitBtn = document.getElementById('submitBtn');
+        const loadExampleButtons = document.querySelectorAll('.load-example');
+        
+        // Load example code
+        loadExampleButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                codeInput.value = this.getAttribute('data-code');
+                // Also set the language based on the active tab
+                const activeTab = document.querySelector('.nav-link.active');
+                if (activeTab) {
+                    const language = activeTab.id.replace('-tab', '');
+                    document.querySelectorAll('#language option').forEach(option => {
+                        if (option.value === language) {
+                            languageSelect.value = language;
+                        }
+                    });
+                }
+            });
+        });
+        
+        // Update max tokens visibility based on endpoint selection
+        apiEndpointSelect.addEventListener('change', function() {
+            const endpoint = this.value;
+            const maxTokensContainer = maxTokensInput.parentElement;
+            
+            if (endpoint === 'complete') {
+                maxTokensContainer.style.display = 'block';
+            } else {
+                maxTokensContainer.style.display = 'none';
+            }
+        });
+        
+        // Submit API request
+        submitBtn.addEventListener('click', function() {
+            const endpoint = apiEndpointSelect.value;
+            const language = languageSelect.value;
+            const code = codeInput.value;
+            
+            if (!code.trim()) {
+                apiOutput.innerHTML = '<div class="text-danger">Please enter some code</div>';
+                return;
+            }
+            
+            // Show loading indicator
+            apiOutput.innerHTML = '<div class="text-center"><i class="fas fa-spinner fa-spin me-2"></i>Processing...</div>';
+            
+            // Prepare request data
+            let requestData = { code: code };
+            
+            if (endpoint === 'complete') {
+                requestData.language = language;
+                requestData.max_tokens = parseInt(maxTokensInput.value);
+            } else if (endpoint === 'check_errors') {
+                requestData.language = language;
+            }
+            
+            // Send API request
+            fetch(`/api/${endpoint}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(requestData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Format and display the output
+                let output = '<pre class="mb-0 p-0">' + JSON.stringify(data, null, 2) + '</pre>';
+                apiOutput.innerHTML = output;
+            })
+            .catch(error => {
+                apiOutput.innerHTML = `<div class="text-danger">Error: ${error.message}</div>`;
+                console.error('Error:', error);
+            });
+        });
+    });
+</script>
+{% endblock %}
