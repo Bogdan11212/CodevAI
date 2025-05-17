@@ -1,7 +1,7 @@
 # CodevAI: Programming Assistant with AI Thinking
 
 <div align="center">
-  <img src="https://raw.githubusercontent.com/Bogdan11212/CodevAI/main/static/img/codevai-logo.svg" alt="CodevAI Logo" width="250">
+  <img src="https://raw.githubusercontent.com/Bogdan11212/CodevAI/main/logo.png" alt="CodevAI Logo" width="250">
   
   <p>
     <strong>An AI-powered programming assistant that explains its thought process</strong>
