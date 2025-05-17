@@ -143,6 +143,24 @@
       "timestamp": "2025-05-17T22:46:04.494377",
       "content_snippet": "repositories Search Results \u00b7 javascript modern patterns\nFilter by\n120 results\n(162 ms)120 results\nJavaScript\nJavaScript (JS) is a lightweight interpreted programming language with first-class functio",
       "code_samples": []
+    },
+    "programming_languages_25": {
+      "source_url": "https://dev.to/search?q=javascript modern patterns",
+      "timestamp": "2025-05-17T22:46:24.510712",
+      "content_snippet": "Skip to content\nNavigation menu\nSearch\nPowered by\nSearch\nAlgolia\nLog in\nCreate account\nDEV Community\nClose\nSearch\nSearch results for javascript modern patterns\nMost Relevant\nNewest\nOldest\nPosts\nPeople",
+      "code_samples": []
+    },
+    "programming_languages_26": {
+      "source_url": "https://medium.com/programming/search?q=javascript modern patterns",
+      "timestamp": "2025-05-17T22:46:44.922075",
+      "content_snippet": "Open in app\nSign up\nSign in\nMedium Logo\nWrite\nSign up\nSign in\nPAGE NOT FOUND\n404\nOut of nothing, something.\nYou can find (just about) anything on Medium \u2014 apparently even a page that doesn\u2019t exist. Ma",
+      "code_samples": []
+    },
+    "programming_languages_27": {
+      "source_url": "https://realpython.com/search?q=javascript modern patterns",
+      "timestamp": "2025-05-17T22:47:04.020455",
+      "content_snippet": "[[ resultsCount ]][[' result' + (resultsCount == 0 || resultsCount > 1 ? \"s\" : \"\") ]] for \u201c[[ filters.query.length < 50 ? filters.query : filters.query.substring(0, 50) + \"\u2026\" ]]\u201d\nYour bookmarks list i",
+      "code_samples": []
     }
   },
   "libraries": {
@@ -254,5 +272,5 @@
       "code_samples": []
     }
   },
-  "last_updated": "2025-05-17T22:46:04.494489"
+  "last_updated": "2025-05-17T22:47:04.020482"
 }
