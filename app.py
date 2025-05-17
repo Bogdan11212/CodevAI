@@ -39,9 +39,11 @@ with app.app_context():
     import models
     db.create_all()
 
-    # Import and register API blueprint
+    # Import and register API blueprints
     from api import api_bp
+    from api.cloudflare_routes import cloudflare_bp
     app.register_blueprint(api_bp, url_prefix='/api')
+    app.register_blueprint(cloudflare_bp)
     
     # Import routes
     from routes import *
