@@ -3,6 +3,7 @@ from flask import render_template, jsonify
 from app import app
 from utils.model_utils import get_language_model_version
 from datetime import datetime
+from api.cloudflare_gateway import cloudflare
 
 logger = logging.getLogger(__name__)
 
@@ -41,6 +42,12 @@ def interactive_editor():
 def ai_learning_page():
     """AI Learning page for continuous learning system"""
     return render_template('ai_learning.html')
+
+@app.route('/cloudflare-ai')
+def cloudflare_ai_page():
+    """Cloudflare AI features demonstration page"""
+    has_credentials = cloudflare.has_credentials()
+    return render_template('cloudflare_ai.html', has_credentials=has_credentials)
 
 @app.route('/api/learning-status')
 def learning_status():

@@ -1,0 +1,626 @@
+{% extends 'layout.html' %}
+
+{% block title %}Cloudflare AI Features{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <!-- Intro section -->
+        <div class="col-12 mb-4">
+            <div class="card gradient-card">
+                <div class="card-body p-4">
+                    <h1 class="display-5 mb-3">
+                        <i class="fas fa-cloud text-primary me-2"></i>
+                        Cloudflare AI Features
+                    </h1>
+                    <p class="lead">
+                        Explore the power of Cloudflare AI integrated with our learning system.
+                        Try out different AI capabilities powered by Cloudflare's state-of-the-art models.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12 col-lg-4 mb-4">
+            <!-- Sidebar navigation -->
+            <div class="card sticky-top" style="top: 2rem; z-index: 1;">
+                <div class="card-header gradient-header">
+                    <h5 class="mb-0"><i class="fas fa-list-ul me-2"></i> Features</h5>
+                </div>
+                <div class="list-group list-group-flush">
+                    <a href="#text-generation" class="list-group-item list-group-item-action d-flex align-items-center">
+                        <i class="fas fa-comment-alt me-2 text-primary"></i> Text Generation
+                    </a>
+                    <a href="#code-analysis" class="list-group-item list-group-item-action d-flex align-items-center">
+                        <i class="fas fa-code me-2 text-success"></i> Code Analysis
+                    </a>
+                    <a href="#image-generation" class="list-group-item list-group-item-action d-flex align-items-center">
+                        <i class="fas fa-image me-2 text-info"></i> Image Generation
+                        <span class="badge bg-primary ms-auto">New</span>
+                    </a>
+                    <a href="#content-moderation" class="list-group-item list-group-item-action d-flex align-items-center">
+                        <i class="fas fa-shield-alt me-2 text-warning"></i> Content Moderation
+                    </a>
+                    <a href="#knowledge-extraction" class="list-group-item list-group-item-action d-flex align-items-center">
+                        <i class="fas fa-brain me-2 text-danger"></i> Knowledge Extraction
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-lg-8">
+            <!-- Text Generation Section -->
+            <section id="text-generation" class="mb-5">
+                <div class="card">
+                    <div class="card-header gradient-header">
+                        <h3 class="mb-0"><i class="fas fa-comment-alt me-2"></i> Text Generation</h3>
+                    </div>
+                    <div class="card-body">
+                        <p>Generate human-like text responses using Cloudflare's implementation of Llama 3 or other text models.</p>
+                        
+                        <form id="text-form" class="mb-4">
+                            <div class="mb-3">
+                                <label for="text-prompt" class="form-label">Your prompt:</label>
+                                <textarea id="text-prompt" class="form-control" rows="3" placeholder="Enter your question or prompt here..."></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Model:</label>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="text-model" id="llama3-8b" value="llama3-8b" checked>
+                                    <label class="form-check-label" for="llama3-8b">Llama 3 (8B) - Fast</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="text-model" id="llama3-70b" value="llama3-70b">
+                                    <label class="form-check-label" for="llama3-70b">Llama 3 (70B) - Advanced</label>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary"><i class="fas fa-play me-2"></i> Generate</button>
+                        </form>
+                        
+                        <div id="text-result" class="p-3 border rounded bg-light d-none">
+                            <div class="mb-2 text-muted small">Generated text:</div>
+                            <div id="text-content" class="generated-content"></div>
+                        </div>
+                        
+                        <div id="text-loading" class="text-center p-4 d-none">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                            <p class="mt-2">Generating text...</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Code Analysis Section -->
+            <section id="code-analysis" class="mb-5">
+                <div class="card">
+                    <div class="card-header gradient-header">
+                        <h3 class="mb-0"><i class="fas fa-code me-2"></i> Code Analysis</h3>
+                    </div>
+                    <div class="card-body">
+                        <p>Analyze, debug, explain, or optimize your code using Cloudflare AI.</p>
+                        
+                        <form id="code-form" class="mb-4">
+                            <div class="mb-3">
+                                <label for="code-input" class="form-label">Your code:</label>
+                                <textarea id="code-input" class="form-control font-monospace" rows="6" placeholder="Paste your code here..."></textarea>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="code-language" class="form-label">Language (optional):</label>
+                                    <select id="code-language" class="form-select">
+                                        <option value="">Auto-detect</option>
+                                        <option value="python">Python</option>
+                                        <option value="javascript">JavaScript</option>
+                                        <option value="java">Java</option>
+                                        <option value="cpp">C++</option>
+                                        <option value="go">Go</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="code-task" class="form-label">Analysis type:</label>
+                                    <select id="code-task" class="form-select">
+                                        <option value="review">Review & Find Issues</option>
+                                        <option value="debug">Debug</option>
+                                        <option value="explain">Explain</option>
+                                        <option value="optimize">Optimize</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-success"><i class="fas fa-search-plus me-2"></i> Analyze</button>
+                        </form>
+                        
+                        <div id="code-result" class="p-3 border rounded bg-light d-none">
+                            <div class="mb-2 text-muted small">Analysis result:</div>
+                            <div id="code-content" class="generated-content"></div>
+                        </div>
+                        
+                        <div id="code-loading" class="text-center p-4 d-none">
+                            <div class="spinner-border text-success" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                            <p class="mt-2">Analyzing code...</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Image Generation Section -->
+            <section id="image-generation" class="mb-5">
+                <div class="card">
+                    <div class="card-header gradient-header">
+                        <h3 class="mb-0"><i class="fas fa-image me-2"></i> Image Generation</h3>
+                        <span class="badge bg-primary">Powered by Stable Diffusion XL</span>
+                    </div>
+                    <div class="card-body">
+                        <p>Generate images from text descriptions using Cloudflare's implementation of Stable Diffusion XL.</p>
+                        
+                        <form id="image-form" class="mb-4">
+                            <div class="mb-3">
+                                <label for="image-prompt" class="form-label">Image description:</label>
+                                <textarea id="image-prompt" class="form-control" rows="3" placeholder="Describe the image you want to generate..."></textarea>
+                                <div class="form-text">Be detailed and specific for best results.</div>
+                            </div>
+                            <button type="submit" class="btn btn-info"><i class="fas fa-palette me-2"></i> Generate Image</button>
+                        </form>
+                        
+                        <div id="image-result" class="text-center p-3 border rounded bg-light d-none">
+                            <div class="mb-2 text-muted small">Generated image:</div>
+                            <img id="generated-image" class="img-fluid rounded shadow-sm" alt="Generated image">
+                            <div class="mt-2">
+                                <a id="download-image" href="#" class="btn btn-sm btn-outline-primary mt-2">
+                                    <i class="fas fa-download me-1"></i> Download Image
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div id="image-loading" class="text-center p-4 d-none">
+                            <div class="spinner-border text-info" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                            <p class="mt-2">Generating image (may take 10-20 seconds)...</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Content Moderation Section -->
+            <section id="content-moderation" class="mb-5">
+                <div class="card">
+                    <div class="card-header gradient-header">
+                        <h3 class="mb-0"><i class="fas fa-shield-alt me-2"></i> Content Moderation</h3>
+                    </div>
+                    <div class="card-body">
+                        <p>Check text content for potential harmful or inappropriate material using Cloudflare's content moderation model.</p>
+                        
+                        <form id="moderation-form" class="mb-4">
+                            <div class="mb-3">
+                                <label for="moderation-text" class="form-label">Text to check:</label>
+                                <textarea id="moderation-text" class="form-control" rows="4" placeholder="Enter text to analyze for potential harmful content..."></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-warning"><i class="fas fa-check-circle me-2"></i> Check Content</button>
+                        </form>
+                        
+                        <div id="moderation-result" class="p-3 border rounded bg-light d-none">
+                            <div class="mb-2 text-muted small">Moderation results:</div>
+                            <div id="moderation-content" class="generated-content"></div>
+                        </div>
+                        
+                        <div id="moderation-loading" class="text-center p-4 d-none">
+                            <div class="spinner-border text-warning" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                            <p class="mt-2">Checking content...</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Knowledge Extraction Section -->
+            <section id="knowledge-extraction" class="mb-5">
+                <div class="card">
+                    <div class="card-header gradient-header">
+                        <h3 class="mb-0"><i class="fas fa-brain me-2"></i> Knowledge Extraction</h3>
+                    </div>
+                    <div class="card-body">
+                        <p>Extract structured knowledge from unstructured text, helpful for learning from web content.</p>
+                        
+                        <form id="knowledge-form" class="mb-4">
+                            <div class="mb-3">
+                                <label for="knowledge-text" class="form-label">Text to analyze:</label>
+                                <textarea id="knowledge-text" class="form-control" rows="6" placeholder="Paste text content to extract knowledge from..."></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label for="knowledge-topic" class="form-label">Topic (optional):</label>
+                                <input type="text" id="knowledge-topic" class="form-control" placeholder="E.g., Python, JavaScript, Algorithms">
+                            </div>
+                            <button type="submit" class="btn btn-danger"><i class="fas fa-lightbulb me-2"></i> Extract Knowledge</button>
+                        </form>
+                        
+                        <div id="knowledge-result" class="p-3 border rounded bg-light d-none">
+                            <div class="mb-2 text-muted small">Extracted knowledge:</div>
+                            <div id="knowledge-content" class="generated-content"></div>
+                        </div>
+                        
+                        <div id="knowledge-loading" class="text-center p-4 d-none">
+                            <div class="spinner-border text-danger" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                            <p class="mt-2">Extracting knowledge...</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Text Generation
+    const textForm = document.getElementById('text-form');
+    const textPrompt = document.getElementById('text-prompt');
+    const textResult = document.getElementById('text-result');
+    const textContent = document.getElementById('text-content');
+    const textLoading = document.getElementById('text-loading');
+    
+    textForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const prompt = textPrompt.value.trim();
+        if (!prompt) return;
+        
+        // Get selected model
+        const model = document.querySelector('input[name="text-model"]:checked').value;
+        
+        // Show loading state
+        textResult.classList.add('d-none');
+        textLoading.classList.remove('d-none');
+        
+        // Make API request
+        fetch('/api/cloudflare/text-generation', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ prompt, model })
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Hide loading state
+            textLoading.classList.add('d-none');
+            
+            // Show result
+            if (data.success) {
+                textContent.innerHTML = data.text.replace(/\n/g, '<br>');
+                textResult.classList.remove('d-none');
+            } else {
+                textContent.innerHTML = `<div class="text-danger">Error: ${data.error || 'Failed to generate text'}</div>`;
+                textResult.classList.remove('d-none');
+            }
+        })
+        .catch(error => {
+            textLoading.classList.add('d-none');
+            textContent.innerHTML = `<div class="text-danger">Error: ${error.message}</div>`;
+            textResult.classList.remove('d-none');
+        });
+    });
+    
+    // Code Analysis
+    const codeForm = document.getElementById('code-form');
+    const codeInput = document.getElementById('code-input');
+    const codeLanguage = document.getElementById('code-language');
+    const codeTask = document.getElementById('code-task');
+    const codeResult = document.getElementById('code-result');
+    const codeContent = document.getElementById('code-content');
+    const codeLoading = document.getElementById('code-loading');
+    
+    codeForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const code = codeInput.value.trim();
+        if (!code) return;
+        
+        // Show loading state
+        codeResult.classList.add('d-none');
+        codeLoading.classList.remove('d-none');
+        
+        // Make API request
+        fetch('/api/cloudflare/code-analysis', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ 
+                code, 
+                language: codeLanguage.value,
+                task: codeTask.value
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Hide loading state
+            codeLoading.classList.add('d-none');
+            
+            // Show result
+            if (data.success) {
+                codeContent.innerHTML = data.text.replace(/\n/g, '<br>');
+                codeResult.classList.remove('d-none');
+            } else {
+                codeContent.innerHTML = `<div class="text-danger">Error: ${data.error || 'Failed to analyze code'}</div>`;
+                codeResult.classList.remove('d-none');
+            }
+        })
+        .catch(error => {
+            codeLoading.classList.add('d-none');
+            codeContent.innerHTML = `<div class="text-danger">Error: ${error.message}</div>`;
+            codeResult.classList.remove('d-none');
+        });
+    });
+    
+    // Image Generation
+    const imageForm = document.getElementById('image-form');
+    const imagePrompt = document.getElementById('image-prompt');
+    const imageResult = document.getElementById('image-result');
+    const generatedImage = document.getElementById('generated-image');
+    const downloadImage = document.getElementById('download-image');
+    const imageLoading = document.getElementById('image-loading');
+    
+    imageForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const prompt = imagePrompt.value.trim();
+        if (!prompt) return;
+        
+        // Show loading state
+        imageResult.classList.add('d-none');
+        imageLoading.classList.remove('d-none');
+        
+        // Make API request
+        fetch('/api/cloudflare/image-generation', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ prompt })
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Hide loading state
+            imageLoading.classList.add('d-none');
+            
+            // Show result
+            if (data.success) {
+                // Set image source
+                generatedImage.src = `data:image/png;base64,${data.image_data}`;
+                
+                // Set download link
+                downloadImage.href = `data:image/png;base64,${data.image_data}`;
+                downloadImage.download = `generated-image-${Date.now()}.png`;
+                
+                imageResult.classList.remove('d-none');
+            } else {
+                generatedImage.src = '';
+                generatedImage.alt = 'Image generation failed';
+                generatedImage.style.display = 'none';
+                imageResult.innerHTML = `<div class="text-danger p-3">Error: ${data.error || 'Failed to generate image'}</div>`;
+                imageResult.classList.remove('d-none');
+            }
+        })
+        .catch(error => {
+            imageLoading.classList.add('d-none');
+            imageResult.innerHTML = `<div class="text-danger p-3">Error: ${error.message}</div>`;
+            imageResult.classList.remove('d-none');
+        });
+    });
+    
+    // Content Moderation
+    const moderationForm = document.getElementById('moderation-form');
+    const moderationText = document.getElementById('moderation-text');
+    const moderationResult = document.getElementById('moderation-result');
+    const moderationContent = document.getElementById('moderation-content');
+    const moderationLoading = document.getElementById('moderation-loading');
+    
+    moderationForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const text = moderationText.value.trim();
+        if (!text) return;
+        
+        // Show loading state
+        moderationResult.classList.add('d-none');
+        moderationLoading.classList.remove('d-none');
+        
+        // Make API request
+        fetch('/api/cloudflare/moderate-content', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ text })
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Hide loading state
+            moderationLoading.classList.add('d-none');
+            
+            // Show result
+            if (data.success) {
+                let html = '<div class="row">';
+                for (const [category, score] of Object.entries(data.categories)) {
+                    const color = score > 0.5 ? 'danger' : (score > 0.2 ? 'warning' : 'success');
+                    const percentage = (score * 100).toFixed(1);
+                    
+                    html += `
+                    <div class="col-md-6 mb-2">
+                        <div class="d-flex justify-content-between">
+                            <span>${category}</span>
+                            <span class="text-${color}">${percentage}%</span>
+                        </div>
+                        <div class="progress">
+                            <div class="progress-bar bg-${color}" role="progressbar" 
+                                 style="width: ${percentage}%" aria-valuenow="${percentage}" 
+                                 aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </div>`;
+                }
+                html += '</div>';
+                
+                moderationContent.innerHTML = html;
+                moderationResult.classList.remove('d-none');
+            } else {
+                moderationContent.innerHTML = `<div class="text-danger">Error: ${data.error || 'Failed to moderate content'}</div>`;
+                moderationResult.classList.remove('d-none');
+            }
+        })
+        .catch(error => {
+            moderationLoading.classList.add('d-none');
+            moderationContent.innerHTML = `<div class="text-danger">Error: ${error.message}</div>`;
+            moderationResult.classList.remove('d-none');
+        });
+    });
+    
+    // Knowledge Extraction
+    const knowledgeForm = document.getElementById('knowledge-form');
+    const knowledgeText = document.getElementById('knowledge-text');
+    const knowledgeTopic = document.getElementById('knowledge-topic');
+    const knowledgeResult = document.getElementById('knowledge-result');
+    const knowledgeContent = document.getElementById('knowledge-content');
+    const knowledgeLoading = document.getElementById('knowledge-loading');
+    
+    knowledgeForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const text = knowledgeText.value.trim();
+        if (!text) return;
+        
+        // Show loading state
+        knowledgeResult.classList.add('d-none');
+        knowledgeLoading.classList.remove('d-none');
+        
+        // Make API request
+        fetch('/api/cloudflare/extract-knowledge', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ 
+                text, 
+                topic: knowledgeTopic.value.trim() 
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Hide loading state
+            knowledgeLoading.classList.add('d-none');
+            
+            // Show result
+            if (data.success && data.knowledge) {
+                let html = '<div class="knowledge-result">';
+                
+                // Key Concepts
+                if (data.knowledge.key_concepts && data.knowledge.key_concepts.length > 0) {
+                    html += '<h5 class="mt-2"><i class="fas fa-lightbulb text-primary me-2"></i>Key Concepts</h5>';
+                    html += '<ul class="list-group mb-3">';
+                    data.knowledge.key_concepts.forEach(concept => {
+                        html += `<li class="list-group-item">${concept}</li>`;
+                    });
+                    html += '</ul>';
+                }
+                
+                // Code Examples
+                if (data.knowledge.code_examples && data.knowledge.code_examples.length > 0) {
+                    html += '<h5 class="mt-3"><i class="fas fa-code text-success me-2"></i>Code Examples</h5>';
+                    data.knowledge.code_examples.forEach(example => {
+                        html += `<pre class="bg-dark text-light p-3 rounded"><code>${example}</code></pre>`;
+                    });
+                }
+                
+                // Best Practices
+                if (data.knowledge.best_practices && data.knowledge.best_practices.length > 0) {
+                    html += '<h5 class="mt-3"><i class="fas fa-check-circle text-info me-2"></i>Best Practices</h5>';
+                    html += '<ul class="list-group mb-3">';
+                    data.knowledge.best_practices.forEach(practice => {
+                        html += `<li class="list-group-item">${practice}</li>`;
+                    });
+                    html += '</ul>';
+                }
+                
+                // Common Problems
+                if (data.knowledge.common_problems && data.knowledge.common_problems.length > 0) {
+                    html += '<h5 class="mt-3"><i class="fas fa-exclamation-triangle text-warning me-2"></i>Common Problems</h5>';
+                    html += '<ul class="list-group mb-3">';
+                    data.knowledge.common_problems.forEach(problem => {
+                        html += `<li class="list-group-item">${problem}</li>`;
+                    });
+                    html += '</ul>';
+                }
+                
+                html += '</div>';
+                knowledgeContent.innerHTML = html;
+                knowledgeResult.classList.remove('d-none');
+            } else {
+                knowledgeContent.innerHTML = `<div class="text-danger">Error: ${data.error || 'Failed to extract knowledge'}</div>`;
+                knowledgeResult.classList.remove('d-none');
+            }
+        })
+        .catch(error => {
+            knowledgeLoading.classList.add('d-none');
+            knowledgeContent.innerHTML = `<div class="text-danger">Error: ${error.message}</div>`;
+            knowledgeResult.classList.remove('d-none');
+        });
+    });
+});
+</script>
+{% endblock %}
+
+{% block head %}
+<style>
+    .gradient-card {
+        background: linear-gradient(135deg, #6e8efb 0%, #a777e3 100%);
+        color: white;
+        border: none;
+        box-shadow: 0 4px 15px rgba(110, 142, 251, 0.4);
+        border-radius: 8px;
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+    
+    .gradient-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(110, 142, 251, 0.5);
+    }
+    
+    .gradient-header {
+        background: linear-gradient(to right, #667eea, #764ba2);
+        color: white;
+        border-bottom: none;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .generated-content {
+        white-space: pre-wrap;
+        line-height: 1.6;
+    }
+    
+    #generated-image {
+        max-height: 500px;
+        object-fit: contain;
+        margin: 0 auto;
+        display: block;
+    }
+    
+    .sticky-top {
+        position: sticky;
+        top: 20px;
+    }
+    
+    /* Animation for loading transitions */
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+    
+    .spinner-border {
+        width: 3rem;
+        height: 3rem;
+    }
+    
+    .knowledge-result h5 {
+        font-weight: 600;
+        margin-top: 1.5rem;
+        margin-bottom: 1rem;
+    }
+</style>
+{% endblock %}
