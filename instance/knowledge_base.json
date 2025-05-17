@@ -65,6 +65,48 @@
       "timestamp": "2025-05-16T22:37:44.719580",
       "content_snippet": "[[ resultsCount ]][[' result' + (resultsCount == 0 || resultsCount > 1 ? \"s\" : \"\") ]] for \u201c[[ filters.query.length < 50 ? filters.query : filters.query.substring(0, 50) + \"\u2026\" ]]\u201d\nYour bookmarks list i",
       "code_samples": []
+    },
+    "programming_languages_12": {
+      "source_url": "https://stackoverflow.com/search?q=clean code principles",
+      "timestamp": "2025-05-17T12:16:19.853831",
+      "content_snippet": "Human verification\nAre you a human being? We apologize for the confusion, but we can't quite tell if you're a person or a script. Please don't take this personally. Bots and scripts can be remarkably ",
+      "code_samples": []
+    },
+    "programming_languages_13": {
+      "source_url": "https://github.com/search?q=clean code principles&type=repositories",
+      "timestamp": "2025-05-17T12:16:41.010757",
+      "content_snippet": "repositories Search Results \u00b7 clean code principles\nFilter by\n1.1k results\n(261 ms)1.1k results\n\ud83d\udec1 Clean Code cho Javascript: m\u1ed9t s\u1ed1 l\u1eddi khuy\u00ean \u0111\u1ec3 gi\u1eef cho code js c\u1ee7a b\u1ea1n lu\u00f4n s\u1ea1ch s\u1ebd th\u01a1m tho \ud83d\udcaa \ud83d\udcaa \ud83d\udcaa\n- ",
+      "code_samples": []
+    },
+    "programming_languages_14": {
+      "source_url": "https://dev.to/search?q=clean code principles",
+      "timestamp": "2025-05-17T12:17:02.133870",
+      "content_snippet": "Skip to content\nNavigation menu\nSearch\nPowered by\nSearch\nAlgolia\nLog in\nCreate account\nDEV Community\nClose\nSearch\nSearch results for clean code principles\nMost Relevant\nNewest\nOldest\nPosts\nPeople\nOrga",
+      "code_samples": []
+    },
+    "programming_languages_15": {
+      "source_url": "https://medium.com/programming/search?q=clean code principles",
+      "timestamp": "2025-05-17T12:17:22.963701",
+      "content_snippet": "Open in app\nSign up\nSign in\nMedium Logo\nWrite\nSign up\nSign in\nPAGE NOT FOUND\n404\nOut of nothing, something.\nYou can find (just about) anything on Medium \u2014 apparently even a page that doesn\u2019t exist. Ma",
+      "code_samples": []
+    },
+    "programming_languages_16": {
+      "source_url": "https://realpython.com/search?q=clean code principles",
+      "timestamp": "2025-05-17T12:17:42.903665",
+      "content_snippet": "[[ resultsCount ]][[' result' + (resultsCount == 0 || resultsCount > 1 ? \"s\" : \"\") ]] for \u201c[[ filters.query.length < 50 ? filters.query : filters.query.substring(0, 50) + \"\u2026\" ]]\u201d\nYour bookmarks list i",
+      "code_samples": []
+    },
+    "programming_languages_17": {
+      "source_url": "https://stackoverflow.com/search?q=go language tutorial",
+      "timestamp": "2025-05-17T12:18:50.708555",
+      "content_snippet": "Human verification\nAre you a human being? We apologize for the confusion, but we can't quite tell if you're a person or a script. Please don't take this personally. Bots and scripts can be remarkably ",
+      "code_samples": []
+    },
+    "programming_languages_18": {
+      "source_url": "https://realpython.com/search?q=python best practices",
+      "timestamp": "2025-05-17T12:21:50.271023",
+      "content_snippet": "[[ resultsCount ]][[' result' + (resultsCount == 0 || resultsCount > 1 ? \"s\" : \"\") ]] for \u201c[[ filters.query.length < 50 ? filters.query : filters.query.substring(0, 50) + \"\u2026\" ]]\u201d\nYour bookmarks list i",
+      "code_samples": []
     }
   },
   "libraries": {
@@ -76,7 +118,32 @@
     }
   },
   "algorithms": {},
-  "best_practices": {},
+  "best_practices": {
+    "best_practices_1": {
+      "source_url": "https://stackoverflow.com/search?q=python best practices",
+      "timestamp": "2025-05-17T12:19:55.000221",
+      "content_snippet": "Human verification\nAre you a human being? We apologize for the confusion, but we can't quite tell if you're a person or a script. Please don't take this personally. Bots and scripts can be remarkably ",
+      "code_samples": []
+    },
+    "best_practices_2": {
+      "source_url": "https://github.com/search?q=python best practices&type=repositories",
+      "timestamp": "2025-05-17T12:20:48.369669",
+      "content_snippet": "repositories Search Results \u00b7 python best practices\nFilter by\n1.9k results\n(234 ms)1.9k results\nA developer toolkit to implement Serverless best practices and increase developer velocity.\n- Python\n- 3",
+      "code_samples": []
+    },
+    "best_practices_3": {
+      "source_url": "https://dev.to/search?q=python best practices",
+      "timestamp": "2025-05-17T12:21:08.119686",
+      "content_snippet": "Skip to content\nNavigation menu\nSearch\nPowered by\nSearch\nAlgolia\nLog in\nCreate account\nDEV Community\nClose\nSearch\nSearch results for python best practices\nMost Relevant\nNewest\nOldest\nPosts\nPeople\nOrga",
+      "code_samples": []
+    },
+    "best_practices_4": {
+      "source_url": "https://medium.com/programming/search?q=python best practices",
+      "timestamp": "2025-05-17T12:21:27.672222",
+      "content_snippet": "Open in app\nSign up\nSign in\nMedium Logo\nWrite\nSign up\nSign in\nPAGE NOT FOUND\n404\nOut of nothing, something.\nYou can find (just about) anything on Medium \u2014 apparently even a page that doesn\u2019t exist. Ma",
+      "code_samples": []
+    }
+  },
   "common_errors": {
     "common_errors_1": {
       "source_url": "https://stackoverflow.com/search?q=common programming errors",
@@ -103,5 +170,5 @@
       "code_samples": []
     }
   },
-  "last_updated": "2025-05-16T22:37:44.719611"
+  "last_updated": "2025-05-17T12:21:50.271046"
 }

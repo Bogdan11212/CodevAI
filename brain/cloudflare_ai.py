@@ -1,5 +1,12 @@
 """
-Module for working with Cloudflare AI Workers
+Module for working with Cloudflare AI and other Cloudflare services
+
+This module provides access to Cloudflare AI models and other Cloudflare services:
+- Text generation and completion with Llama 3
+- Code analysis and generation
+- Image recognition and analysis
+- Content moderation
+- And other Cloudflare Workers AI capabilities
 """
 
 import os
@@ -8,18 +15,34 @@ import json
 import logging
 import time
 import traceback
+import base64
+from typing import Dict, List, Any, Optional, Union
 
 logger = logging.getLogger(__name__)
 
-# Check for Cloudflare AI token
+# Check for Cloudflare AI token and account ID
 CLOUDFLARE_AI_TOKEN = os.environ.get("CLOUDFLARE_AI_TOKEN")
+CLOUDFLARE_ACCOUNT_ID = os.environ.get("CLOUDFLARE_ACCOUNT_ID")
+
+# Log warning if tokens not found
 if not CLOUDFLARE_AI_TOKEN:
     logger.warning("Cloudflare AI token not found. A valid token is required for real-time operation.")
+if not CLOUDFLARE_ACCOUNT_ID:
+    logger.warning("Cloudflare Account ID not found. This is required for accessing Cloudflare services.")
 
-# Базовый URL для Cloudflare AI Workers
+# Base URLs for Cloudflare services
 CLOUDFLARE_AI_URL = "https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/run/"
-# Если в реальном приложении будет известен аккаунт
-CLOUDFLARE_ACCOUNT_ID = os.environ.get("CLOUDFLARE_ACCOUNT_ID", "your-account-id")
+
+# Available models
+MODELS = {
+    "llama3-8b": "@cf/meta/llama-3-8b-instruct",
+    "llama3-70b": "@cf/meta/llama-3-70b-instruct",
+    "claude-instant": "@cf/anthropic/claude-instant-1",
+    "claude-2": "@cf/anthropic/claude-2",
+    "stable-diffusion": "@cf/stabilityai/stable-diffusion-xl-base-1.0",
+    "moderation": "@cf/cloudflare/moderation",
+    "image-classification": "@cf/microsoft/resnet-50"
+}
 
 def get_ai_thinking(prompt, language="general", max_thoughts=3):
     """
